@@ -11,11 +11,11 @@ The plugin is jurisdiction-aware. The first thing it does is ask where the HQ wi
 **Claude Code**
 
 ```
-/plugin marketplace add andcalcagnonyc/solofunder
+/plugin marketplace add andcalcagnonyc/solofounder
 /plugin install solofounder@solofounder
 ```
 
-**Claude desktop app**: download `solofounder.plugin` from the [latest release](https://github.com/andcalcagnonyc/solofunder/releases/latest) and add it as a plugin.
+**Claude desktop app**: download `solofounder.plugin` from the [latest release](https://github.com/andcalcagnonyc/solofounder/releases/latest) and add it as a plugin.
 
 Then say: `start solofounder`.
 
