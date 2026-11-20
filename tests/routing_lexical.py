@@ -5,7 +5,8 @@ skills on words alone; a model routing on meaning is expected to do better."""
 import json, math, re, sys, pathlib
 from collections import Counter
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
+REPO = pathlib.Path(__file__).resolve().parent.parent
+ROOT = REPO / "solofounder"
 STOP = set("a an the and or to of for my i me is in on with this that be should used when user asks needs it do what how are from at by as we our you your".split())
 
 def toks(s):
@@ -28,7 +29,7 @@ def vec(t):
     return {w: x / norm for w, x in v.items()}
 
 dv = {k: vec(t) for k, t in docs.items()}
-cases = [l.split("\t", 1) for l in (ROOT / "tests/routing_cases.tsv").read_text().splitlines() if l.strip()]
+cases = [l.split("\t", 1) for l in (REPO / "tests/routing_cases.tsv").read_text().splitlines() if l.strip()]
 top1 = top3 = area = 0
 misses = []
 for exp, prompt in cases:

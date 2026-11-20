@@ -2,7 +2,8 @@
 """Structural validation of the solofounder plugin. Usage: python3 tests/validate_structure.py [--json out.json]"""
 import json, re, sys, pathlib
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
+REPO = pathlib.Path(__file__).resolve().parent.parent
+ROOT = REPO / "solofounder"
 REQUIRED_SECTIONS = ["## Workflow", "## Deliverables", "## Founder approval gates", "## Guardrails"]
 AREAS = {"core", "legal", "finance", "marketing", "sales", "product", "eng", "ops", "support"}
 
@@ -17,7 +18,7 @@ def check(cond, msg):
 manifest = json.loads((ROOT / ".claude-plugin/plugin.json").read_text())
 check(re.fullmatch(r"[a-z0-9-]+", manifest.get("name", "")) is not None, "plugin name not kebab-case")
 check(re.fullmatch(r"\d+\.\d+\.\d+", manifest.get("version", "")) is not None, "version not semver")
-market = json.loads((ROOT / ".claude-plugin/marketplace.json").read_text())
+market = json.loads((REPO / ".claude-plugin/marketplace.json").read_text())
 check(any(p["name"] == manifest["name"] for p in market["plugins"]), "plugin missing from marketplace.json")
 
 connectors = (ROOT / "CONNECTORS.md").read_text()

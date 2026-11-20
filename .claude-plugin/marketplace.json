@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "solofounder",
-      "source": "./",
+      "source": "./solofounder",
       "description": "Launch and run an Applied AI or Agentic AI company end to end as a solo founder with Claude.",
       "version": "0.1.0",
       "category": "productivity"

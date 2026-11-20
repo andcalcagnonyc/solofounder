@@ -98,7 +98,7 @@ Notable behaviour: in run C1 the skill's country check removed the 40 German acc
 ## Reproduce
 
 ```
-claude plugin validate .
+claude plugin validate ./solofounder
 python3 tests/validate_structure.py --json tests/results/structure.json
 python3 tests/routing_lexical.py --json tests/results/routing_lexical.json
 ```

@@ -52,13 +52,13 @@ Each skill has the same structure: purpose, inputs, numbered workflow, deliverab
 | 11-12 | Sales playbook, CRM and funnel, outbound, website live | G4 Go-to-market |
 | 13-14 | Support, billing, pilot onboarding, operating routines | G5 Launch |
 
-Full plan: [`skills/launch-sprint/references/14-day-plan.md`](skills/launch-sprint/references/14-day-plan.md).
+Full plan: [`solofounder/skills/launch-sprint/references/14-day-plan.md`](solofounder/skills/launch-sprint/references/14-day-plan.md).
 
 **What two weeks does and does not cover.** The work Claude and the founder control fits in the sprint. Steps on third-party clocks (company registration, bank account, tax registrations, trademarks, enterprise procurement) take from a day to several weeks depending on the country; the sprint starts them on day 1 and runs everything else in parallel.
 
 ## Tools
 
-Skills refer to tools by category (`~~CRM`, `~~accounting system`, `~~helpdesk`, and so on) so the plugin works with any stack. See [`CONNECTORS.md`](CONNECTORS.md). Without a connected tool, a skill produces ready-to-use files and manual steps.
+Skills refer to tools by category (`~~CRM`, `~~accounting system`, `~~helpdesk`, and so on) so the plugin works with any stack. See [`CONNECTORS.md`](solofounder/CONNECTORS.md). Without a connected tool, a skill produces ready-to-use files and manual steps.
 
 ## Safety model
 
@@ -92,11 +92,10 @@ Seven scenario runs cover 6 of the 57 skills, each run once and graded by a mode
 ## Repository layout
 
 ```
-.claude-plugin/   plugin.json, marketplace.json
-skills/           57 skills, each skills/<name>/SKILL.md (+ references/)
-tests/            validators, synthetic cases, scenarios, rubric, results
-examples/         outputs of the scenario tests (synthetic)
-CONNECTORS.md     tool categories and placeholders
+.claude-plugin/        marketplace.json
+solofounder/           the plugin: .claude-plugin/plugin.json, skills/, CONNECTORS.md
+tests/                 validators, synthetic cases, scenarios, rubric, results
+examples/              outputs of the scenario tests (synthetic)
 ```
 
 ## License
