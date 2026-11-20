@@ -1,6 +1,6 @@
 # Prospect list build plan (no prospect data was supplied; the list is empty until sourced)
 
-No account or contact below is invented. The CSV `2026-11-20-prospect-list-template.csv` holds the columns only.
+No account or contact below is invented. The CSV `2026-11-20-prospect-list-template.md` holds the columns only.
 
 ## Account filters (from the profile ICP)
 - E-commerce brand selling online, 20 to 200 staff, HQ in US (80), Germany (40), Canada (30)
