@@ -19,7 +19,7 @@ With one founder and no employees recorded, a company card plus the accounting s
 ## Setup steps once you approve (manual, no tool is connected)
 1. Open the bank account; note account numbers for SGD, EUR, USD.
 2. Create the accounting file: base currency per the functional-currency decision, year-end 31 December, lock date policy on.
-3. Import `2026-11-20-chart-of-accounts.csv`; map tax codes after the GST decision.
+3. Import `2026-11-20-chart-of-accounts.md`; map tax codes after the GST decision.
 4. Connect bank feeds and the Stripe feed; set the clearing-account rule.
 5. Build the invoice template: company name, UEN, registered address, invoice number in unbroken sequence, date, customer legal name and address, customer VAT ID for EU customers, description, currency, payment terms, bank details. If not GST-registered, the invoice must not show GST or be titled "tax invoice" (confirm wording with the accountant).
 6. Create a document store with one folder per month: bank statements, sales invoices, supplier bills, contracts, payroll, tax.

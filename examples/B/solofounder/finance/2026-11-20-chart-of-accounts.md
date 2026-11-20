@@ -1,0 +1,53 @@
+# Chart of Accounts (synthetic test output)
+
+| Code | Name | Type | Statement | Function | Default tax code | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1000 | Operating bank account - SGD | Current asset | Balance sheet |  | No tax | One ledger account per bank currency |
+| 1010 | Operating bank account - EUR | Current asset | Balance sheet |  | No tax | Open only if a EUR balance is held |
+| 1020 | Operating bank account - USD | Current asset | Balance sheet |  | No tax | Open only if a USD balance is held |
+| 1050 | Payment processor clearing | Current asset | Balance sheet |  | No tax | Stripe balance; reconcile to payout reports |
+| 1100 | Trade receivables | Current asset | Balance sheet |  | No tax |  |
+| 1150 | Contract assets (unbilled revenue) | Current asset | Balance sheet |  | No tax |  |
+| 1200 | Prepayments | Current asset | Balance sheet |  | No tax | Annual software and cloud commitments |
+| 1250 | Deposits | Current asset | Balance sheet |  | No tax |  |
+| 1300 | GST input tax receivable | Current asset | Balance sheet |  | No tax | Dormant until GST-registered |
+| 1500 | Computer equipment - cost | Non-current asset | Balance sheet |  | No tax |  |
+| 1510 | Computer equipment - accumulated depreciation | Non-current asset | Balance sheet |  | No tax |  |
+| 1600 | Capitalised development costs | Non-current asset | Balance sheet |  | No tax | Dormant; policy is to expense (see policies memo) |
+| 2000 | Trade payables | Current liability | Balance sheet |  | No tax |  |
+| 2050 | Accrued expenses | Current liability | Balance sheet |  | No tax | Accrue month-end model and cloud usage |
+| 2100 | Contract liabilities (deferred revenue) | Current liability | Balance sheet |  | No tax |  |
+| 2150 | GST output tax payable | Current liability | Balance sheet |  | No tax | Dormant until GST-registered |
+| 2200 | CPF and payroll liabilities | Current liability | Balance sheet |  | No tax | Dormant until payroll starts |
+| 2250 | Corporate income tax payable | Current liability | Balance sheet |  | No tax |  |
+| 2300 | Amount due to director | Current liability | Balance sheet |  | No tax | Founder-paid expenses awaiting reimbursement |
+| 3000 | Share capital | Equity | Balance sheet |  | No tax |  |
+| 3100 | Retained earnings | Equity | Balance sheet |  | No tax |  |
+| 4000 | Subscription revenue | Revenue | Income statement | Revenue | TBD | Split by customer country with a tracking category |
+| 4010 | Usage-based revenue | Revenue | Income statement | Revenue | TBD | Per document or shipment if priced that way |
+| 4020 | Pilot and implementation fees | Revenue | Income statement | Revenue | TBD |  |
+| 4900 | Other income | Other income | Income statement | Other | No tax | Grants and interest |
+| 5000 | Model inference | Cost of revenue | Income statement | Cost of revenue | TBD | Production API usage only |
+| 5010 | Cloud hosting - production | Cost of revenue | Income statement | Cost of revenue | TBD |  |
+| 5020 | Document processing and OCR services | Cost of revenue | Income statement | Cost of revenue | TBD |  |
+| 5030 | Payment processing fees | Cost of revenue | Income statement | Cost of revenue | No tax |  |
+| 5040 | Customer support tooling | Cost of revenue | Income statement | Cost of revenue | TBD |  |
+| 6000 | R&D - model experimentation and evals | Operating expense | Income statement | R&D | TBD | Non-production model usage |
+| 6010 | R&D - cloud development and staging | Operating expense | Income statement | R&D | TBD |  |
+| 6020 | R&D - contractors | Operating expense | Income statement | R&D | TBD |  |
+| 6030 | R&D - developer tools and software | Operating expense | Income statement | R&D | TBD |  |
+| 6100 | S&M - advertising and events | Operating expense | Income statement | Sales and marketing | TBD |  |
+| 6110 | S&M - sales tools | Operating expense | Income statement | Sales and marketing | TBD |  |
+| 6120 | S&M - travel | Operating expense | Income statement | Sales and marketing | TBD |  |
+| 6200 | G&A - director remuneration | Operating expense | Income statement | General and administrative | No tax |  |
+| 6210 | G&A - employer CPF and SDL | Operating expense | Income statement | General and administrative | No tax |  |
+| 6220 | G&A - corporate secretarial and registry fees | Operating expense | Income statement | General and administrative | TBD |  |
+| 6230 | G&A - accounting and tax fees | Operating expense | Income statement | General and administrative | TBD |  |
+| 6240 | G&A - legal fees | Operating expense | Income statement | General and administrative | TBD |  |
+| 6250 | G&A - insurance | Operating expense | Income statement | General and administrative | TBD |  |
+| 6260 | G&A - office and software subscriptions | Operating expense | Income statement | General and administrative | TBD |  |
+| 6270 | G&A - bank charges | Operating expense | Income statement | General and administrative | No tax |  |
+| 6300 | Depreciation | Operating expense | Income statement | General and administrative | No tax |  |
+| 7000 | Foreign exchange gain or loss - realised | Other | Income statement | Other | No tax |  |
+| 7010 | Foreign exchange gain or loss - unrealised | Other | Income statement | Other | No tax |  |
+| 8000 | Income tax expense | Tax | Income statement | Tax | No tax |  |
