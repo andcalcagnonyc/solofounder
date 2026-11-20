@@ -56,6 +56,10 @@ Full plan: [`solofounder-os/skills/launch-sprint/references/14-day-plan.md`](sol
 
 **What two weeks does and does not cover.** The work Claude and the founder control fits in the sprint. Steps on third-party clocks (company registration, bank account, tax registrations, trademarks, enterprise procurement) take from a day to several weeks depending on the country; the sprint starts them on day 1 and runs everything else in parallel.
 
+## Guided workspace
+
+[`app/`](app/) holds SoloFounder OS, a single-page guided workspace built on the same 57 skills: a setup wizard that produces the company profile, the 14-day sprint as a tracked board, and a step-by-step runner for each skill with saved progress, approvals, notes, and a decision log. It runs as a Claude artifact; `app/tests/` has its browser test suite (68 checks).
+
 ## Tools
 
 Skills refer to tools by category (`~~CRM`, `~~accounting system`, `~~helpdesk`, and so on) so the plugin works with any stack. See [`CONNECTORS.md`](solofounder-os/CONNECTORS.md). Without a connected tool, a skill produces ready-to-use files and manual steps.

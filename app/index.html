@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SoloFounder OS</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..650&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: an issue tracker for one person. Fixed sidebar, dense 36px rows, a 14-day rail as the one loud element. */
+:root{
+  --nh:278; --nc:.006; --ah:277; --ac:.165; --al:53%; --ald:54%;
+  --bg:oklch(99.2% var(--nc) var(--nh)); --panel:oklch(97.6% var(--nc) var(--nh)); --raise:oklch(100% 0 0);
+  --hover:oklch(95.4% calc(var(--nc)*1.4) var(--nh)); --line:oklch(92% var(--nc) var(--nh)); --line2:oklch(86% calc(var(--nc)*1.5) var(--nh));
+  --tx:oklch(23% .015 var(--nh)); --tx2:oklch(45% .012 var(--nh)); --tx3:oklch(60% .01 var(--nh));
+  --accent:oklch(var(--al) var(--ac) var(--ah)); --accent-tx:oklch(46% var(--ac) var(--ah)); --accent-soft:oklch(95.5% calc(var(--ac)*.22) var(--ah)); --on-accent:#fff;
+  --ok:oklch(58% .13 155); --warn:oklch(68% .15 75); --crit:oklch(58% .19 25); --todo:oklch(62% .01 var(--nh));
+  --shadow:0 1px 2px oklch(20% .02 var(--nh)/.06),0 8px 28px oklch(20% .02 var(--nh)/.10);
+  --sans:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
+  --bg:oklch(17.5% calc(var(--nc)*1.6) var(--nh)); --panel:oklch(15% calc(var(--nc)*1.6) var(--nh)); --raise:oklch(21.5% calc(var(--nc)*1.8) var(--nh));
+  --hover:oklch(22.5% calc(var(--nc)*2) var(--nh)); --line:oklch(25.5% calc(var(--nc)*2) var(--nh)); --line2:oklch(33% calc(var(--nc)*2) var(--nh));
+  --tx:oklch(95% .005 var(--nh)); --tx2:oklch(73% .01 var(--nh)); --tx3:oklch(56% .012 var(--nh));
+  --accent:oklch(var(--ald) var(--ac) var(--ah)); --accent-tx:oklch(77% calc(var(--ac)*.8) var(--ah)); --accent-soft:oklch(27% calc(var(--ac)*.4) var(--ah));
+  --ok:oklch(70% .14 155); --warn:oklch(78% .14 80); --crit:oklch(68% .18 25); --todo:oklch(56% .012 var(--nh));
+  --shadow:0 1px 2px #0006,0 12px 32px #0008;}}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:oklch(17.5% calc(var(--nc)*1.6) var(--nh)); --panel:oklch(15% calc(var(--nc)*1.6) var(--nh)); --raise:oklch(21.5% calc(var(--nc)*1.8) var(--nh));
+  --hover:oklch(22.5% calc(var(--nc)*2) var(--nh)); --line:oklch(25.5% calc(var(--nc)*2) var(--nh)); --line2:oklch(33% calc(var(--nc)*2) var(--nh));
+  --tx:oklch(95% .005 var(--nh)); --tx2:oklch(73% .01 var(--nh)); --tx3:oklch(56% .012 var(--nh));
+  --accent:oklch(var(--ald) var(--ac) var(--ah)); --accent-tx:oklch(77% calc(var(--ac)*.8) var(--ah)); --accent-soft:oklch(27% calc(var(--ac)*.4) var(--ah));
+  --ok:oklch(70% .14 155); --warn:oklch(78% .14 80); --crit:oklch(68% .18 25); --todo:oklch(56% .012 var(--nh));
+  --shadow:0 1px 2px #0006,0 12px 32px #0008;}
+:root[data-palette="ember"]{--nh:55;--nc:.008;--ah:38;--ac:.17;--al:55%;--ald:54%}
+:root[data-palette="pine"]{--nh:165;--nc:.008;--ah:162;--ac:.105;--al:47%;--ald:49%}
+:root[data-palette="tide"]{--nh:240;--nc:.009;--ah:245;--ac:.15;--al:53%;--ald:52%}
+:root[data-palette="plum"]{--nh:330;--nc:.007;--ah:338;--ac:.17;--al:50%;--ald:53%}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--tx);font:400 13px/1.5 var(--sans);letter-spacing:-.006em;-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss03"}
+button,input,select,textarea{font:inherit;color:inherit;letter-spacing:inherit}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:1px;border-radius:4px}
+h1,h2,h3{margin:0;font-weight:600;text-wrap:balance}
+.mono{font-family:var(--mono);font-size:11.5px;letter-spacing:0;font-variant-numeric:tabular-nums}
+svg{flex:none}
+
+.app{display:grid;grid-template-columns:244px minmax(0,1fr);height:100%}
+.side{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
+.ws{display:flex;align-items:center;gap:9px;padding:12px 12px 10px}
+.mark{width:22px;height:22px;border-radius:6px;background:var(--accent);display:grid;place-items:center}
+.ws b{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ws small{display:block;color:var(--tx3);font-size:11px;line-height:1.2}
+.nav{padding:4px 8px;display:flex;flex-direction:column;gap:1px;overflow:auto;min-height:0;flex:1}
+.nav h3{font-size:11px;font-weight:500;color:var(--tx3);padding:14px 8px 5px}
+.nav a{display:flex;align-items:center;gap:9px;height:28px;padding:0 8px;border-radius:var(--r);color:var(--tx2)}
+.nav a:hover{background:var(--hover);color:var(--tx)}
+.nav a[aria-current="page"]{background:var(--hover);color:var(--tx);font-weight:500}
+.nav a span{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav a i{font-style:normal;color:var(--tx3)}
+.sidefoot{border-top:1px solid var(--line);padding:8px;display:flex;gap:6px;align-items:center}
+.save{flex:1;display:flex;align-items:center;gap:7px;color:var(--tx3);font-size:11.5px;padding-left:6px;min-width:0}
+.save span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--todo);flex:none}
+.dot.ok{background:var(--ok)}.dot.busy{background:var(--warn)}.dot.err{background:var(--crit)}
+
+.main{display:flex;flex-direction:column;min-width:0;min-height:0}
+.top{height:44px;flex:none;display:flex;align-items:center;gap:10px;padding:0 20px;border-bottom:1px solid var(--line)}
+.crumb{display:flex;align-items:center;gap:7px;min-width:0;flex:1;font-weight:500}
+.crumb a{color:var(--tx2)}.crumb a:hover{color:var(--tx)}
+.crumb span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumb em{font-style:normal;color:var(--tx3)}
+.scroll{flex:1;overflow:auto;min-height:0}
+.top .menu-btn{display:none}
+
+.btn{height:28px;padding:0 10px;border-radius:var(--r);border:1px solid var(--line2);background:var(--raise);display:inline-flex;align-items:center;gap:6px;cursor:pointer;white-space:nowrap;font-weight:500}
+.btn:hover{background:var(--hover)}
+.btn.pri{background:var(--accent);border-color:transparent;color:var(--on-accent)}
+.btn.pri:hover{filter:brightness(1.08)}
+.btn.ghost{border-color:transparent;background:none;color:var(--tx2)}
+.btn.ghost:hover{background:var(--hover);color:var(--tx)}
+.btn.icon{width:28px;padding:0;justify-content:center}
+.btn[disabled]{opacity:.5;cursor:default}
+kbd{font:500 10.5px var(--mono);color:var(--tx3);border:1px solid var(--line2);border-radius:4px;padding:1px 4px;background:var(--bg)}
+
+.vh{padding:22px 28px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:flex-end}
+.vh h1{font-size:20px;letter-spacing:-.02em;line-height:1.25}
+.vh p{margin:4px 0 0;color:var(--tx2);max-width:62ch}
+.vh .grow{flex:1;min-width:240px}
+
+/* day rail */
+.rail{margin:2px 28px 18px;display:grid;grid-template-columns:repeat(14,minmax(0,1fr));gap:3px}
+.rail button{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding-top:15px;position:relative}
+.rail .bar{height:26px;border-radius:4px;background:var(--hover);position:relative;overflow:hidden;border:1px solid transparent}
+.rail .bar i{position:absolute;inset:auto 0 0 0;background:var(--accent);opacity:.85}
+.rail .today .bar{border-color:var(--accent)}
+.rail .past .bar{background:var(--line)}
+.rail b{font:500 10.5px var(--mono);color:var(--tx3);text-align:center}
+.rail .today b{color:var(--accent-tx)}
+.rail .g{position:absolute;top:0;left:50%;translate:-50% 0;font:500 9.5px var(--mono);color:var(--tx2);display:flex;align-items:center;gap:3px}
+.rail .g::before{content:"";width:6px;height:6px;rotate:45deg;background:var(--tx3);border-radius:1px}
+.rail .g.pass::before{background:var(--ok)}
+.rail button:focus-visible .bar{outline:2px solid var(--accent);outline-offset:1px}
+
+.grp{position:sticky;top:0;z-index:1;display:flex;align-items:center;gap:10px;height:32px;padding:0 28px;background:var(--panel);border-block:1px solid var(--line);color:var(--tx2)}
+.grp b{color:var(--tx);font-weight:500;white-space:nowrap}
+.grp span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+.gate{display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:10px;border:1px solid var(--line2);font-size:11px;color:var(--tx2);white-space:nowrap;background:var(--bg);cursor:pointer}
+.gate::before{content:"";width:6px;height:6px;rotate:45deg;background:var(--tx3);border-radius:1px}
+.grp .gate{flex:none}.gate.pass{color:var(--tx)}.gate.pass::before{background:var(--ok)}
+.row{display:flex;align-items:center;gap:10px;height:36px;padding:0 28px;border-bottom:1px solid var(--line);cursor:pointer}
+.row:hover,.row:focus-visible{background:var(--hover);outline:none}
+.row .id{width:52px;color:var(--tx3)}
+.row .t{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:450}
+.row.done .t{color:var(--tx3)}
+.row .n{color:var(--tx3)}
+.chip{height:20px;padding:0 7px;border-radius:10px;border:1px solid var(--line);font-size:11px;color:var(--tx2);display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.st{all:unset;cursor:pointer;display:grid;place-items:center;width:18px;height:18px;border-radius:50%}
+.st:hover{background:var(--line)}
+.empty{padding:28px;color:var(--tx3)}
+
+/* skill page */
+.skill{display:grid;grid-template-columns:minmax(0,1fr) 264px;min-height:100%}
+.doc{padding:28px 36px 60px;max-width:820px;width:100%;justify-self:center}
+.doc h1{font-size:23px;letter-spacing:-.022em;line-height:1.2;margin:8px 0 10px}
+.doc .lead{color:var(--tx2);font-size:14px;line-height:1.55;max-width:66ch;margin:0 0 6px}
+.sec{margin-top:26px}
+.sec>h2{font-size:12px;font-weight:500;color:var(--tx3);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.sec>h2 i{font-style:normal;font-family:var(--mono);font-size:11px}
+.plain{margin:0;padding:0 0 0 16px;color:var(--tx2)}
+.plain li{margin:3px 0}
+.steps{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--raise)}
+.step{display:flex;gap:11px;padding:9px 12px;border-bottom:1px solid var(--line);cursor:pointer;align-items:flex-start}
+.step:last-child{border-bottom:0}
+.step:hover{background:var(--hover)}
+.step input{position:absolute;opacity:0;pointer-events:none}
+.box{flex:none;width:15px;height:15px;margin-top:2px;border-radius:4px;border:1.5px solid var(--line2);display:grid;place-items:center;background:var(--bg)}
+.step input:checked+.box{background:var(--accent);border-color:var(--accent)}
+.step input:focus-visible+.box{outline:2px solid var(--accent);outline-offset:2px}
+.step .num{color:var(--tx3);width:18px;flex:none;padding-top:1px}
+.step p{margin:0;flex:1;line-height:1.5}
+.step.ck p{color:var(--tx3)}
+.step.cur{background:var(--accent-soft)}
+.step.cur p{color:var(--tx)}
+.step .now{color:var(--accent-tx);font-size:11px;font-weight:500;white-space:nowrap;padding-top:1px}
+.gates .box{border-radius:50%}
+.gates .step input:checked+.box{background:var(--ok);border-color:var(--ok)}
+.note{width:100%;min-height:88px;resize:vertical;border:1px solid var(--line);border-radius:8px;background:var(--raise);padding:10px 12px;line-height:1.5}
+.note:focus{outline:none;border-color:var(--accent)}
+.claude{border:1px solid var(--line);border-radius:8px;background:var(--raise)}
+.claude .bar2{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px}
+.claude .bar2 p{margin:0;flex:1;min-width:200px;color:var(--tx2)}
+.out{border-top:1px solid var(--line);padding:14px 16px;max-height:520px;overflow:auto;line-height:1.6}
+.out h3,.out h4{font-size:13.5px;margin:16px 0 6px}.out h3:first-child{margin-top:0}
+.out p{margin:0 0 9px}.out ul,.out ol{margin:0 0 9px;padding-left:20px}
+.out code{font:12px var(--mono);background:var(--hover);padding:1px 4px;border-radius:4px}
+.out pre{background:var(--hover);padding:10px;border-radius:6px;overflow:auto}
+.out pre code{background:none;padding:0}
+.out table{border-collapse:collapse;display:block;overflow-x:auto;margin-bottom:10px}
+.out td,.out th{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+.hint{color:var(--tx3);font-size:11.5px;margin:7px 2px 0}
+.props{border-left:1px solid var(--line);padding:22px 18px;background:var(--panel);display:flex;flex-direction:column;gap:2px}
+.props h3{font-size:11px;font-weight:500;color:var(--tx3);margin:14px 0 6px}
+.props h3:first-child{margin-top:0}
+.prop{display:flex;align-items:center;gap:8px;min-height:28px;color:var(--tx2)}
+.prop>span:first-child{width:74px;flex:none;color:var(--tx3)}
+.prop a:hover{color:var(--tx);text-decoration:underline}
+.sel{height:28px;border-radius:var(--r);border:1px solid transparent;background:none;padding:0 6px;margin-left:-6px;cursor:pointer;max-width:100%}
+.sel:hover{background:var(--hover);border-color:var(--line)}
+.act{font-size:11.5px;color:var(--tx3);padding:3px 0;line-height:1.4}
+.confirm{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px;padding:10px 12px;border:1px solid var(--warn);border-radius:8px;background:var(--raise)}
+.confirm p{margin:0;flex:1;min-width:200px}
+.pmeter{height:3px;border-radius:2px;background:var(--line);overflow:hidden;flex:1}
+.pmeter i{display:block;height:100%;background:var(--accent)}
+
+/* setup */
+.setup{display:grid;grid-template-columns:200px minmax(0,560px);gap:44px;padding:34px 36px 60px;justify-content:center}
+.stepper{display:flex;flex-direction:column;gap:2px;position:sticky;top:34px;align-self:start}
+.stepper button{all:unset;cursor:pointer;display:flex;gap:10px;align-items:center;height:30px;padding:0 8px;border-radius:var(--r);color:var(--tx3)}
+.stepper button:hover{background:var(--hover)}
+.stepper button[aria-current="step"]{color:var(--tx);font-weight:500}
+.stepper i{font:500 10.5px var(--mono);width:18px;height:18px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;font-style:normal;flex:none}
+.stepper .ok i{background:var(--ok);border-color:var(--ok);color:#fff}
+.stepper [aria-current="step"] i{border-color:var(--accent);color:var(--accent-tx)}
+.form h1{font-size:22px;letter-spacing:-.02em}
+.form>p{color:var(--tx2);margin:6px 0 22px;max-width:60ch;font-size:14px}
+.f{display:flex;flex-direction:column;gap:5px;margin-bottom:16px}
+.f label{font-weight:500}
+.f small{color:var(--tx3);font-size:11.5px}
+.f input,.f select,.f textarea{height:32px;border-radius:var(--r);border:1px solid var(--line2);background:var(--raise);padding:0 10px;width:100%}
+.f textarea{height:auto;min-height:64px;padding:8px 10px;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.f .bad{border-color:var(--crit)}
+.f .err{color:var(--crit);font-size:11.5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.seg{display:inline-flex;border:1px solid var(--line2);border-radius:var(--r);overflow:hidden;background:var(--raise);flex-wrap:wrap}
+.f .seg{align-self:flex-start}
+.seg button{all:unset;cursor:pointer;height:30px;padding:0 12px;border-right:1px solid var(--line);color:var(--tx2)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent-tx);font-weight:500}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.formfoot{display:flex;gap:8px;align-items:center;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+.formfoot .sp{flex:1;color:var(--tx3);font-size:11.5px}
+.md{font:12px/1.6 var(--mono);white-space:pre-wrap;background:var(--raise);border:1px solid var(--line);border-radius:8px;padding:14px 16px;max-height:340px;overflow:auto;color:var(--tx2)}
+.flag{display:flex;gap:9px;padding:9px 12px;border:1px solid var(--line);border-left:3px solid var(--warn);border-radius:6px;background:var(--raise);margin-bottom:8px}
+.next{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--raise)}
+.next .row{padding:0 12px}.next .row:last-child{border-bottom:0}
+
+/* overlays */
+.ov{position:fixed;inset:0;background:oklch(15% .02 var(--nh)/.35);display:grid;justify-items:center;align-items:start;padding:12vh 16px 16px;z-index:20}
+.pal{width:min(600px,100%);background:var(--raise);border:1px solid var(--line2);border-radius:10px;box-shadow:var(--shadow);overflow:hidden}
+.pal input{width:100%;height:46px;border:0;border-bottom:1px solid var(--line);background:none;padding:0 16px;font-size:15px}
+.pal input:focus{outline:none}
+.pal ul{list-style:none;margin:0;padding:6px;max-height:340px;overflow:auto}
+.pal li{display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:var(--r);cursor:pointer}
+.pal li[aria-selected="true"]{background:var(--hover)}
+.pal li span{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pal li em{font-style:normal;color:var(--tx3);font-size:11.5px}
+.pop{position:fixed;left:8px;bottom:52px;width:228px;background:var(--raise);border:1px solid var(--line2);border-radius:10px;box-shadow:var(--shadow);padding:12px;z-index:21}
+.pop h3{font-size:11px;font-weight:500;color:var(--tx3);margin:0 0 7px}
+.pop h3+*{margin-bottom:14px}
+.sw{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.sw button{all:unset;cursor:pointer;height:34px;border-radius:7px;border:1px solid var(--line2);overflow:hidden;display:grid;grid-template-columns:1fr 1fr;position:relative}
+.sw button[aria-pressed="true"]{outline:2px solid var(--accent);outline-offset:1px}
+.sw button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.sw i{display:block}.sw u{position:absolute;inset:auto 0 0 0;height:8px}
+.toast{position:fixed;bottom:18px;left:50%;translate:-50% 0;background:var(--tx);color:var(--bg);padding:7px 12px;border-radius:8px;font-weight:500;z-index:30;box-shadow:var(--shadow)}
+.declist .row{height:auto;min-height:40px;padding-block:8px;align-items:flex-start;cursor:default}
+.declist .t{white-space:normal}
+.addrow{display:flex;gap:8px;padding:12px 28px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.addrow input{flex:1;min-width:180px;height:30px;border-radius:var(--r);border:1px solid var(--line2);background:var(--raise);padding:0 10px}
+
+@media (max-width:900px){.skill{grid-template-columns:1fr}.props{border-left:0;border-top:1px solid var(--line)}.setup{grid-template-columns:1fr;gap:18px;padding:22px 18px 50px}.stepper{position:static;flex-direction:row;flex-wrap:wrap}}
+@media (max-width:760px){
+  .app{grid-template-columns:1fr}
+  .side{position:fixed;inset:0 auto 0 0;width:260px;z-index:15;translate:-100% 0;transition:translate .18s;box-shadow:var(--shadow)}
+  .side.open{translate:0 0}
+  .top .menu-btn{display:inline-flex}
+  .top{padding:0 12px}.vh{padding:18px 16px 12px}.rail{margin-inline:16px}.grp,.row,.addrow{padding-inline:16px}
+  .row .id,.row .chip{display:none}
+  .doc{padding:20px 16px 50px}.two{grid-template-columns:1fr}
+  .pop{left:8px;right:8px;width:auto}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" id="side"></aside>
+  <div class="main">
+    <header class="top" id="top"></header>
+    <div class="scroll" id="scroll"><div id="view"></div></div>
+  </div>
+</div>
+<div id="overlay"></div>
+<script>
+"use strict";
+/* ---------- constants ---------- */
+const AREAS=[
+ {k:"core",n:"Core",d:"Profile, the 14-day plan, your tool stack, and the weekly review."},
+ {k:"legal",n:"Legal",d:"Formation, ownership, fundraising paperwork, governance, contracts, privacy, people, IP, and deadlines."},
+ {k:"finance",n:"Finance",d:"Finance stack, bookkeeping and close, billing, payables and payroll, tax, runway, and investors."},
+ {k:"marketing",n:"Marketing",d:"Positioning, brand, website, search and AI answers, demand, communications, field and partners."},
+ {k:"sales",n:"Sales",d:"Playbook, CRM and funnel, automated outreach, qualification, closing, and forecast."},
+ {k:"product",n:"Product",d:"Discovery, strategy, specifications, UX, pricing, and analytics."},
+ {k:"eng",n:"Engineering",d:"Architecture, agents, data, build workflow, evaluation, testing, security, and release."},
+ {k:"ops",n:"Cloud Ops",d:"Infrastructure, monitoring, incidents, cost, and reliability."},
+ {k:"support",n:"Support",d:"Support setup, AI support agent, tickets, knowledge base, and customer success."}];
+const AREA=Object.fromEntries(AREAS.map(a=>[a.k,a]));
+const STATUS=[["backlog","Backlog"],["todo","Todo"],["progress","In progress"],["done","Done"],["skipped","Skipped"]];
+const SLABEL=Object.fromEntries(STATUS);
+const PALETTES=[["iris","Iris",277,.165],["ember","Ember",38,.17],["pine","Pine",162,.105],["tide","Tide",245,.15],["plum","Plum",338,.17]];
+const KEY="sfos.state.v1";
+const FIELDS=[ // setup wizard: [step, key, label, type, hint, options]
+ [0,"hq_country","Where will the company HQ be?","text","Country. Every legal, tax, and privacy skill works from this answer."],
+ [0,"hq_region","State, province, or city","text","Only where it matters, for example Delaware or Ontario."],
+ [0,"incorporated","Is the company already incorporated?","seg","",["Yes","No"]],
+ [0,"legal_form","Legal form","text","For example C-Corporation, Ltd, S.r.l., GmbH, Pte. Ltd.",null,p=>p.incorporated==="Yes"],
+ [0,"fy_end","Financial year-end","text","For example 31 December.",null,p=>p.incorporated==="Yes"],
+ [0,"open_abroad","Open to incorporating outside the country you live in?","seg","",["Yes","No","Not sure"],p=>p.incorporated==="No"],
+ [0,"citizenship","Your citizenship","text",""],
+ [0,"tax_residence","Your country of tax residence","text","Running a foreign company from where you live can create tax obligations there."],
+ [0,"customer_countries","Countries of your first customers","text","Comma-separated."],
+ [0,"worker_countries","Countries of employees or contractors","text","Leave empty if none."],
+ [1,"name","Company name","text","A working name is fine."],
+ [1,"one_liner","What does the product do, and for whom?","area","One sentence."],
+ [1,"type","Company type","seg","Applied AI embeds AI in a product or workflow. Agentic AI has autonomous agents completing tasks.",["Applied AI","Agentic AI"]],
+ [1,"unit_of_work","Unit of work the product performs","text","For example one invoice matched, one support ticket resolved."],
+ [1,"stage","Stage","seg","",["Idea","Prototype","Pilot","Revenue"]],
+ [1,"funding","Funding plan","seg","",["Bootstrapped","Angels","Venture","Grants"]],
+ [1,"funding_amount","Target amount and timing","text","Optional."],
+ [2,"launch_date","Launch target date","date",""],
+ [2,"hours","Hours per week you can give this","number","Under 30 hours, the sprint calendar stretches."],
+ [2,"budget","Budget for tools and services, first 90 days","text","Amount and currency, for example 5,000 EUR."],
+ [2,"tools","Tools you already use","area","CRM, accounting, code host, cloud, helpdesk. One per line or comma-separated."],
+ [2,"languages","Languages for customer-facing material","text",""],
+ [2,"sensitive","Sensitive data the product handles","seg","",["None","Personal","Health","Financial"]],
+ [2,"approval","What should Claude ask you to approve?","seg","Either way, nothing is filed, signed, paid, or sent without you.",["Everything","External, financial, irreversible only"]]];
+const SETUP_STEPS=["Location and legal","Company","Operating constraints","Review"];
+
+/* ---------- state ---------- */
+let DATA=null, SK={}, S=fresh(), route={v:"setup"}, ui={pal:null,pop:false,confirm:null,errs:{},draft:{}}, cloud={ref:null,sample:null,status:"local"};
+function fresh(){return{v:1,savedAt:0,profile:{},setup:{step:0,done:false},runs:{},decisions:[],activity:[],sprint:{start:""},prefs:{theme:"system",palette:"iris"}}}
+function migrate(o){const b=fresh();return Object.assign(b,o,{setup:Object.assign(b.setup,o.setup),sprint:Object.assign(b.sprint,o.sprint),prefs:Object.assign(b.prefs,o.prefs),profile:o.profile||{},runs:o.runs||{},decisions:o.decisions||[],activity:o.activity||[]})}
+try{const l=JSON.parse(localStorage.getItem(KEY)||"null");if(l&&l.v===1)S=migrate(l)}catch(e){}
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const today=()=>{const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10)};
+function run(n){return S.runs[n]||{status:"backlog",steps:[],dels:[],gates:[],notes:"",updated:0}}
+function mut(n){if(!S.runs[n])S.runs[n]={status:"backlog",steps:[],dels:[],gates:[],notes:"",updated:0};S.runs[n].updated=Date.now();return S.runs[n]}
+function tally(n){const s=SK[n],r=run(n),c=a=>a.filter(Boolean).length;
+  return{steps:c(r.steps.slice(0,s.workflow.length)),stepsN:s.workflow.length,dels:c(r.dels.slice(0,s.deliverables.length)),delsN:s.deliverables.length,gates:c(r.gates.slice(0,s.gates.length)),gatesN:s.gates.length}}
+function openItems(n){const t=tally(n);return{steps:t.stepsN-t.steps,dels:t.delsN-t.dels,gates:t.gatesN-t.gates,all:t.stepsN-t.steps+t.delsN-t.dels+t.gatesN-t.gates}}
+function log(skill,text){S.activity.unshift({t:Date.now(),skill,text});S.activity.length=Math.min(S.activity.length,120)}
+function setStatus(n,st){const r=mut(n);if(r.status===st)return;r.status=st;log(n,"Status set to "+SLABEL[st])}
+function sprintDay(){if(!S.sprint.start)return 0;const d=Math.floor((new Date(today())-new Date(S.sprint.start))/864e5)+1;return d<1?0:d}
+function dayOf(n){const d=DATA.days.find(d=>d.skills.includes(n));return d?d.day:0}
+function gatePassed(day){return day.skills.every(n=>["done","skipped"].includes(run(n).status))}
+
+/* ---------- persistence ---------- */
+let saveTimer=null,saving=false,dirty=false;
+function setSave(st){cloud.status=st;const el=document.getElementById("save");if(!el)return;
+  const m={cloud:["ok","Saved to your Claude account"],saving:["busy","Saving"],local:["","Saved in this browser"],retry:["err","Could not save. Retrying"]}[st];
+  el.innerHTML=`<i class="dot ${m[0]}"></i><span>${m[1]}</span>`;el.title=st==="local"?"Open this page signed in to Claude to save your workspace to your account.":""}
+function touch(){S.savedAt=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
+  if(cloud.ref){dirty=true;clearTimeout(saveTimer);saveTimer=setTimeout(flush,900);setSave("saving")}else setSave("local")}
+async function flush(){if(saving||!dirty||!cloud.ref)return;saving=true;dirty=false;
+  try{await cloud.ref.set(JSON.parse(JSON.stringify(S)));if(!dirty)setSave("cloud")}
+  catch(e){if(e&&e.code==="unavailable"){dirty=true;setSave("retry");setTimeout(flush,4000)}else{cloud.ref=null;setSave("local")}}
+  saving=false;if(dirty&&cloud.status!=="retry")flush()}
+const withTimeout=(p,ms)=>Promise.race([p,new Promise((_,r)=>setTimeout(()=>r({code:"timeout"}),ms))]);
+async function initCloud(){
+  if(!(window.claude&&window.claude.use)){setSave("local");return}
+  window.claude.use("sample").then(f=>{cloud.sample=f||null;if(route.v==="skill")render()}).catch(()=>{});
+  try{
+    const [db,user]=await Promise.all([window.claude.use("db"),window.claude.use("user")]);
+    const uid=user?await user.id():null;
+    if(!db||!uid){setSave("local");return}
+    const ref=db.doc("data/users/"+uid+"/workspace");
+    const snap=await withTimeout(ref.get(),10000);
+    cloud.ref=ref;cloud.uid=uid;
+    const remote=snap.exists?snap.data():null;
+    if(remote&&(remote.savedAt||0)>(S.savedAt||0)){S=migrate(JSON.parse(JSON.stringify(remote)));try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}applyPrefs();go();setSave("cloud")}
+    else if(S.savedAt&&(!remote||S.savedAt>(remote.savedAt||0))){dirty=true;flush()}
+    else setSave("cloud");
+  }catch(e){setSave("local")}
+}
+function outRef(n){return cloud.ref?cloud.ref.collection("outputs").doc(n):null}
+async function loadOut(n){let t="";try{t=localStorage.getItem("sfos.out."+n)||""}catch(e){}
+  const r=outRef(n);if(r){try{const s=await withTimeout(r.get(),8000);if(s.exists&&s.data().text)t=s.data().text}catch(e){}}return t}
+async function saveOut(n,text){try{localStorage.setItem("sfos.out."+n,text)}catch(e){}const r=outRef(n);if(r){try{await r.set({text:text.slice(0,180000),at:Date.now()})}catch(e){}}}
+
+/* ---------- prefs ---------- */
+let themeSet=false;
+function applyPrefs(){const r=document.documentElement,p=S.prefs;
+  if(p.palette==="iris")r.removeAttribute("data-palette");else r.setAttribute("data-palette",p.palette);
+  if(p.theme==="system"){if(themeSet){r.removeAttribute("data-theme");themeSet=false}}else{r.setAttribute("data-theme",p.theme);themeSet=true}}
+
+/* ---------- icons ---------- */
+const I={
+ status(st,p){const c={backlog:"var(--todo)",todo:"var(--todo)",progress:"var(--warn)",done:"var(--accent)",skipped:"var(--tx3)"}[st];
+  if(st==="done")return`<svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="${c}"/><path d="M4 7.2l2 2 4-4.4" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  if(st==="skipped")return`<svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6.2" fill="none" stroke="${c}" stroke-width="1.5"/><path d="M4.5 7h5" stroke="${c}" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+  if(st==="progress"){const a=Math.max(.12,Math.min(.92,p||.3))*2*Math.PI,x=7+3.6*Math.sin(a),y=7-3.6*Math.cos(a);
+   return`<svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6.2" fill="none" stroke="${c}" stroke-width="1.5"/><path d="M7 7V3.4A3.6 3.6 0 ${a>Math.PI?1:0} 1 ${x.toFixed(2)} ${y.toFixed(2)}Z" fill="${c}"/></svg>`}
+  return`<svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6.2" fill="none" stroke="${c}" stroke-width="1.5" ${st==="backlog"?'stroke-dasharray="2.2 2.2"':""}/></svg>`},
+ ring(p){const c=2*Math.PI*5.2;return`<svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="5.2" fill="none" stroke="var(--line2)" stroke-width="1.8"/><circle cx="7" cy="7" r="5.2" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-dasharray="${(c*p).toFixed(2)} ${c}" transform="rotate(-90 7 7)" stroke-linecap="round"/></svg>`},
+ g(d){return`<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`},
+ get setup(){return this.g('<path d="M2.5 4h9M2.5 7h9M2.5 10h5"/>')}, get sprint(){return this.g('<path d="M2 11.5V8M5.3 11.5V5M8.7 11.5V6.5M12 11.5V2.5"/>')},
+ get active(){return this.g('<circle cx="7" cy="7" r="4.8"/><path d="M7 4.4V7l1.8 1.2"/>')}, get dec(){return this.g('<path d="M3 2.5h8v9H3zM5.2 5.2h3.6M5.2 7.6h3.6"/>')},
+ get prof(){return this.g('<path d="M2.5 11.5v-7l4.5-2 4.5 2v7zM5.5 11.5V8.2h3v3.3"/>')}, get search(){return this.g('<circle cx="6.2" cy="6.2" r="3.7"/><path d="M9 9l2.8 2.8"/>')},
+ get theme(){return this.g('<circle cx="7" cy="7" r="4.8"/><path d="M7 2.2v9.6" /><path d="M7 2.2a4.8 4.8 0 010 9.6z" fill="currentColor"/>')}, get menu(){return this.g('<path d="M2.5 4h9M2.5 7h9M2.5 10h9"/>')},
+ get chev(){return this.g('<path d="M5.5 3.5L9 7l-3.5 3.5"/>')}, get copy(){return this.g('<rect x="4.5" y="4.5" width="7" height="7" rx="1.5"/><path d="M2.5 9V3.5a1 1 0 011-1H9"/>')},
+ get spark(){return this.g('<path d="M7 1.8l1.3 3.9 3.9 1.3-3.9 1.3L7 12.2 5.7 8.3 1.8 7l3.9-1.3z"/>')},
+ check:'<svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 5.2l2 2 4-4.4" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>'};
+
+/* ---------- routing ---------- */
+function parseHash(){const h=location.hash.replace(/^#/,"");
+  if(h.startsWith("skill-")&&SK[h.slice(6)])return{v:"skill",n:h.slice(6)};
+  if(h.startsWith("area-")&&AREA[h.slice(5)])return{v:"area",k:h.slice(5)};
+  if(["setup","sprint","active","decisions","profile"].includes(h))return{v:h};
+  return{v:S.setup.done?"sprint":"setup"}}
+function go(){route=parseHash();ui.confirm=null;ui.errs={};render();document.getElementById("scroll").scrollTop=0;document.getElementById("side").classList.remove("open")}
+function nav(h){if(location.hash==="#"+h)go();else location.hash=h}
+
+/* ---------- render: shell ---------- */
+function areaProg(k){const l=DATA.skills.filter(s=>s.area===k);return{n:l.length,d:l.filter(s=>run(s.name).status==="done").length}}
+function renderSide(){const cur=h=>location.hash==="#"+h||(h==="setup"&&route.v==="setup")||(h==="sprint"&&route.v==="sprint")?' aria-current="page"':"";
+  const act=DATA.skills.filter(s=>["progress","todo"].includes(run(s.name).status)).length;
+  const name=S.profile.name||"Your company";
+  document.getElementById("side").innerHTML=`
+  <div class="ws"><div class="mark"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M9.6 3.1C8.9 2.2 7.7 1.6 6.2 1.6 4.2 1.6 2.8 2.7 2.8 4.2c0 3.2 6.6 1.5 6.6 4.2 0 1.3-1.3 2.1-3.1 2.1-1.6 0-3-.7-3.7-1.8" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+   <div style="min-width:0"><b title="${esc(name)}">${esc(name)}</b><small>SoloFounder OS</small></div></div>
+  <nav class="nav" aria-label="Workspace">
+   <a href="#setup"${cur("setup")}>${I.setup}<span>Setup</span>${S.setup.done?"":'<i class="mono">'+(S.setup.step+1)+"/4</i>"}</a>
+   <a href="#sprint"${cur("sprint")}>${I.sprint}<span>Launch sprint</span>${sprintDay()?'<i class="mono">D'+Math.min(sprintDay(),99)+"</i>":""}</a>
+   <a href="#active"${cur("active")}>${I.active}<span>Active</span>${act?'<i class="mono">'+act+"</i>":""}</a>
+   <a href="#decisions"${cur("decisions")}>${I.dec}<span>Decisions</span>${S.decisions.length?'<i class="mono">'+S.decisions.length+"</i>":""}</a>
+   <a href="#profile"${cur("profile")}>${I.prof}<span>Company profile</span></a>
+   <h3>Functions</h3>
+   ${AREAS.map(a=>{const p=areaProg(a.k);return`<a href="#area-${a.k}"${route.v==="area"&&route.k===a.k||route.v==="skill"&&SK[route.n].area===a.k?' aria-current="page"':""}>${I.ring(p.d/p.n)}<span>${a.n}</span><i class="mono">${p.d}/${p.n}</i></a>`}).join("")}
+  </nav>
+  <div class="sidefoot"><div class="save" id="save"></div><button class="btn icon ghost" data-a="pop" aria-label="Appearance" title="Appearance">${I.theme}</button></div>`;
+  setSave(cloud.status)}
+function renderTop(){let c="";
+  if(route.v==="skill"){const s=SK[route.n];c=`<a href="#area-${s.area}">${AREA[s.area].n}</a><em>/</em><span><span class="mono" style="color:var(--tx3)">${s.id}</span>&nbsp; ${esc(s.title)}</span>`}
+  else c=`<span>${{setup:"Setup",sprint:"Launch sprint",active:"Active",decisions:"Decisions",profile:"Company profile",area:route.k?AREA[route.k].n:""}[route.v]}</span>`;
+  document.getElementById("top").innerHTML=`<button class="btn icon ghost menu-btn" data-a="menu" aria-label="Open navigation">${I.menu}</button><div class="crumb">${c}</div>
+   <button class="btn ghost" data-a="palette">${I.search}<span>Search</span><kbd>${/Mac|iPhone|iPad/.test(navigator.platform)?"⌘":"Ctrl"} K</kbd></button>`}
+function render(){if(!DATA)return;renderSide();renderTop();
+  const v=document.getElementById("view"),sc=document.getElementById("scroll"),top=sc.scrollTop;
+  v.innerHTML=({setup:vSetup,sprint:vSprint,active:vActive,decisions:vDecisions,profile:vProfile,area:vArea,skill:vSkill}[route.v])();
+  sc.scrollTop=top;renderOverlay()}
+
+/* ---------- rows ---------- */
+function rowHTML(s,o={}){const r=run(s.name),t=tally(s.name),d=dayOf(s.name);
+  return`<a class="row ${r.status==="done"?"done":""}" href="#skill-${s.name}">
+   <button class="st" data-a="cycle" data-n="${s.name}" aria-label="Status: ${SLABEL[r.status]}. Change" title="${SLABEL[r.status]}">${I.status(r.status,t.steps/t.stepsN)}</button>
+   <span class="id mono">${s.id}</span><span class="t">${esc(s.title)}</span>
+   ${t.steps&&r.status!=="done"?`<span class="n mono">${t.steps}/${t.stepsN}</span>`:""}
+   ${o.area?`<span class="chip">${AREA[s.area].n}</span>`:""}${o.day&&d?`<span class="chip mono">D${d}</span>`:""}</a>`}
+
+/* ---------- views ---------- */
+function vSprint(){const cur=sprintDay(),done=DATA.skills.filter(s=>run(s.name).status==="done").length;
+  const rail=DATA.days.map(d=>{const n=d.skills.length,dn=d.skills.filter(x=>["done","skipped"].includes(run(x).status)).length;
+    return`<button class="${d.day===cur?"today":cur>d.day?"past":""}" data-a="jump" data-d="${d.day}" aria-label="Day ${d.day}: ${esc(d.goal)}. ${dn} of ${n} done">
+     ${d.gate?`<span class="g ${gatePassed(d)?"pass":""}">${d.gate.id}</span>`:""}<span class="bar"><i style="height:${Math.round(dn/n*100)}%"></i></span><b>${d.day}</b></button>`}).join("");
+  const groups=DATA.days.map(d=>`<div class="grp" id="day-${d.day}"><b>Day ${d.day}</b><span>${esc(d.goal)}</span>${d.gate?`<span class="gate ${gatePassed(d)?"pass":""}" title="${esc(d.gate.passes)}">${d.gate.id} ${esc(d.gate.name)}</span>`:""}</div>${d.skills.map(n=>rowHTML(SK[n],{area:1})).join("")}`).join("");
+  const later=DATA.later.map(l=>`<div class="grp"><b>${esc(l.label)}</b><span>${esc(l.focus)}</span></div>${l.skills.map(n=>rowHTML(SK[n],{area:1})).join("")}`).join("");
+  return`<div class="vh"><div class="grow"><h1>Launch sprint</h1><p>${cur?`Day ${Math.min(cur,14)} of 14${cur>14?", sprint window passed":""}. ${done} of ${DATA.skills.length} skills done.`:"Fourteen days from profile to pilot customers. Registration, banking, and tax IDs run on third-party clocks, so they start on day 1."}</p></div>
+   ${S.sprint.start?`<label class="chip" style="height:28px;gap:8px">Started <input type="date" id="sprint-start" value="${esc(S.sprint.start)}" style="border:0;background:none;height:24px"></label>`:`<button class="btn pri" data-a="start-sprint">Start the sprint today</button>`}</div>
+   <div class="rail" role="group" aria-label="Sprint days">${rail}</div>${groups}${later}`}
+function vArea(){const a=AREA[route.k],l=DATA.skills.filter(s=>s.area===a.k),p=areaProg(a.k);
+  return`<div class="vh"><div class="grow"><h1>${a.n}</h1><p>${a.d}</p></div><div style="display:flex;align-items:center;gap:10px;width:180px"><div class="pmeter"><i style="width:${p.d/p.n*100}%"></i></div><span class="mono" style="color:var(--tx3)">${p.d}/${p.n}</span></div></div>
+   <div style="border-top:1px solid var(--line)">${l.map(s=>rowHTML(s,{day:1})).join("")}</div>`}
+function vActive(){const pr=DATA.skills.filter(s=>run(s.name).status==="progress"),td=DATA.skills.filter(s=>run(s.name).status==="todo");
+  const appr=DATA.skills.filter(s=>["progress","todo"].includes(run(s.name).status)&&openItems(s.name).gates>0);
+  const g=(t,l,h)=>l.length?`<div class="grp"><b>${t}</b><span>${h}</span><span class="mono">${l.length}</span></div>${l.map(s=>rowHTML(s,{area:1,day:1})).join("")}`:"";
+  const rec=S.activity.slice(0,12).map(a=>`<div class="row" style="cursor:default"><span class="id mono">${SK[a.skill]?SK[a.skill].id:""}</span><span class="t" style="font-weight:400">${esc(a.text)}${SK[a.skill]?` · <a href="#skill-${a.skill}" style="color:var(--tx2)">${esc(SK[a.skill].title)}</a>`:""}</span><span class="n mono">${ago(a.t)}</span></div>`).join("");
+  return`<div class="vh"><div class="grow"><h1>Active</h1><p>What you are working on, what is queued, and what is waiting for your approval.</p></div></div>
+   ${g("In progress",pr,"")}${g("Todo",td,"Queued next")}${g("Waiting for your approval",appr,"Approval gates still open")}
+   ${!pr.length&&!td.length?`<div class="empty">Nothing in progress. Open the <a href="#sprint" style="color:var(--accent-tx)">launch sprint</a> and start the first skill of the day.</div>`:""}
+   ${rec?`<div class="grp"><b>Recent activity</b><span></span></div>${rec}`:""}`}
+function ago(t){const m=Math.round((Date.now()-t)/6e4);return m<1?"now":m<60?m+"m":m<1440?Math.round(m/60)+"h":Math.round(m/1440)+"d"}
+function vDecisions(){return`<div class="vh"><div class="grow"><h1>Decisions</h1><p>Every approval you give is logged here. Add the decisions you make outside a skill too, with the reason, so later skills can respect them.</p></div></div>
+  <form class="addrow" data-f="decision" style="border-top:1px solid var(--line)"><input id="dec-text" placeholder="Decision" aria-label="Decision" autocomplete="off"><input id="dec-why" placeholder="Why" aria-label="Why" autocomplete="off"><button class="btn">Add decision</button></form>
+  <div class="declist">${S.decisions.map((d,i)=>`<div class="row"><span class="id mono" style="width:78px">${esc(d.date)}</span><span class="t">${esc(d.text)}${d.why?`<br><span style="color:var(--tx3);font-weight:400">${esc(d.why)}</span>`:""}</span>${d.skill&&SK[d.skill]?`<a class="chip" href="#skill-${d.skill}">${SK[d.skill].id}</a>`:""}<button class="btn ghost icon" data-a="del-dec" data-i="${i}" aria-label="Remove decision" title="Remove">×</button></div>`).join("")||`<div class="empty">No decisions yet. Approving a gate inside a skill adds one.</div>`}</div>`}
+
+function profileMD(){const p=S.profile,v=k=>(p[k]||"").toString().trim()||"TBD";
+  return`# Company Profile
+_Last updated: ${today()}_
+
+## Identity
+- Company name: ${v("name")}
+- One-line description: ${v("one_liner")}
+- Company type: ${v("type")}
+- Unit of work the product performs: ${v("unit_of_work")}
+- Stage: ${v("stage")}
+
+## Jurisdiction
+- HQ country (state / province / city): ${v("hq_country")}${p.hq_region?" ("+p.hq_region.trim()+")":""}
+- Incorporated: ${v("incorporated")}
+- Legal form: ${v("legal_form")}
+- Financial year-end: ${v("fy_end")}
+- Open to incorporating abroad: ${p.incorporated==="No"?v("open_abroad"):"n/a"}
+- Founder citizenship: ${v("citizenship")}
+- Founder tax residence: ${v("tax_residence")}
+- Customer countries: ${v("customer_countries")}
+- Employee / contractor countries: ${(p.worker_countries||"").trim()||"None"}
+
+## Ownership and funding
+- Funding plan: ${v("funding")}
+- Target amount and timing: ${v("funding_amount")}
+
+## Product and market
+- Sensitive data handled: ${v("sensitive")}
+
+## Operating constraints
+- Launch target date: ${v("launch_date")}
+- Founder hours per week: ${v("hours")}
+- 90-day budget and currency: ${v("budget")}
+- Languages: ${v("languages")}
+
+## Tool stack
+${(p.tools||"").split(/[\n,]/).map(s=>s.trim()).filter(Boolean).map(t=>"- "+t).join("\n")||"- TBD"}
+
+## Approval rules
+- ${p.approval==="Everything"?"Founder approves every action.":"Founder approves every external, financial, and irreversible action."}
+`}
+function flags(){const p=S.profile,f=[],eq=(a,b)=>a&&b&&a.trim().toLowerCase()===b.trim().toLowerCase();
+  if(p.hq_country&&p.tax_residence&&!eq(p.hq_country,p.tax_residence))f.push(`You are tax resident in ${p.tax_residence} and the HQ is in ${p.hq_country}. Managing a company from another country can create tax residence or filing duties there. Raise it in Entity Formation.`);
+  if(p.incorporated==="No")f.push("The company is not incorporated. Registration and banking run on third-party clocks: start Entity Formation on day 1.");
+  if(p.sensitive&&p.sensitive!=="None")f.push(`The product handles ${p.sensitive.toLowerCase()} data. Run Privacy, Data Protection, and AI Regulation before the first customer.`);
+  if(p.hours&&Number(p.hours)<30)f.push(`At ${p.hours} hours a week the 14-day calendar will stretch. The sprint skill re-plans it.`);
+  const miss=FIELDS.filter(x=>(!x[6]||x[6](p))&&!(p[x[1]]||"").toString().trim()).length;if(miss)f.push(`${miss} field${miss>1?"s are":" is"} still empty and recorded as TBD. Skills will ask when they need them.`);
+  return f}
+function nextSkills(){const p=S.profile,st=p.stage,o=[];
+  if(st==="Idea")o.push("product-discovery-and-validation");
+  if(p.incorporated!=="Yes")o.push("legal-entity-formation");else o.push("finance-setup");
+  o.push("launch-sprint");
+  if(st==="Pilot"||st==="Revenue")o.push("stack-and-automation-setup","founder-weekly-review");
+  if(st==="Prototype")o.push("marketing-positioning-and-messaging");
+  return[...new Set(o)].slice(0,4)}
+function fieldHTML(x){const[, k,label,type,hint,opts,cond]=x,p=S.profile,val=p[k]??"";if(cond&&!cond(p))return"";
+  const e=ui.errs[k];let c;
+  if(type==="seg")c=`<div class="seg" role="group" aria-label="${esc(label)}">${opts.map(o=>`<button type="button" data-a="seg" data-k="${k}" data-v="${esc(o)}" aria-pressed="${val===o}">${esc(o)}</button>`).join("")}</div>`;
+  else if(type==="area")c=`<textarea id="f-${k}" data-k="${k}" rows="2">${esc(val)}</textarea>`;
+  else c=`<input id="f-${k}" data-k="${k}" type="${type}" value="${esc(val)}" ${type==="number"?'min="0" max="120"':""} autocomplete="off" class="${e?"bad":""}">`;
+  return`<div class="f"><label ${type==="seg"?"":`for="f-${k}"`}>${esc(label)}</label>${c}${e?`<span class="err">${esc(e)}</span>`:hint?`<small>${esc(hint)}</small>`:""}</div>`}
+function vSetup(){const st=S.setup.step;
+  const stepper=`<div class="stepper" role="list">${SETUP_STEPS.map((n,i)=>`<button data-a="setup-step" data-i="${i}" class="${i!==st&&(i<st||S.setup.done)?"ok":""}" ${i===st?'aria-current="step"':""}><i>${i!==st&&(i<st||S.setup.done)?"✓":i+1}</i>${n}</button>`).join("")}</div>`;
+  let body;
+  if(st<3){const intro=["Start with where you are. Legal form, tax, privacy, employment, and even cold-email rules change by country, so nothing downstream assumes one.","What you are building and how far along it is. This decides which skills come first.","How much time and money you have, and how much you want to approve yourself."][st];
+    body=`<h1>${SETUP_STEPS[st]}</h1><p>${intro}</p>${FIELDS.filter(x=>x[0]===st).map(fieldHTML).join("")}
+     <div class="formfoot"><span class="sp">${st===0?"Do not enter ID numbers, bank details, or passwords.":"Empty answers are recorded as TBD."}</span>${st?`<button class="btn" data-a="setup-back">Back</button>`:""}<button class="btn pri" data-a="setup-next">Continue</button></div>`}
+  else{const fl=flags(),nx=nextSkills();
+    body=`<h1>Review your company profile</h1><p>Every skill reads this first. Copy it into your project so Claude has it in each session, and change it here when facts change.</p>
+     ${fl.map(f=>`<div class="flag"><span>${esc(f)}</span></div>`).join("")}
+     <div class="sec" style="margin-top:18px"><h2>Company profile <button class="btn ghost" data-a="copy-profile" style="margin-left:auto">${I.copy}Copy</button></h2><div class="md" id="profile-md" tabindex="0">${esc(profileMD())}</div></div>
+     <div class="sec"><h2>Recommended next</h2><div class="next">${nx.map(n=>rowHTML(SK[n],{area:1})).join("")}</div></div>
+     <div class="formfoot"><span class="sp">${S.setup.done?"Profile confirmed.":"Legal, tax, and accounting outputs are drafts for locally licensed professionals to review."}</span><button class="btn" data-a="setup-back">Back</button>${S.setup.done?`<a class="btn pri" href="#sprint">Open the sprint</a>`:`<button class="btn pri" data-a="setup-finish">Confirm profile</button>`}</div>`}
+  return`<div class="setup">${stepper}<div class="form">${body}</div></div>`}
+function vProfile(){return`<div class="vh"><div class="grow"><h1>Company profile</h1><p>The single source of truth for every skill. Edit it in Setup; copy it into each Claude session that runs a skill.</p></div><a class="btn" href="#setup">Edit in Setup</a><button class="btn" data-a="copy-profile">${I.copy}Copy</button></div>
+  <div style="padding:0 28px 28px;max-width:820px"><div class="md" id="profile-md" tabindex="0" style="max-height:none">${esc(profileMD())}</div>
+  <div class="sec"><h2>Workspace</h2>${ui.confirm==="reset"?`<div class="confirm" style="border-color:var(--crit);margin-top:0"><p>This erases the profile, all progress, notes, and decisions. It cannot be undone.</p><button class="btn" data-a="cancel">Keep everything</button><button class="btn" data-a="reset-yes" style="color:var(--crit)">Erase workspace</button></div>`:`<button class="btn" data-a="reset">Reset workspace</button>`}</div></div>`}
+
+/* ---------- skill page ---------- */
+function vSkill(){const s=SK[route.n],r=run(s.name),t=tally(s.name),op=openItems(s.name),d=dayOf(s.name);
+  const cur=r.status==="done"?-1:s.workflow.findIndex((_,i)=>!r.steps[i]);
+  const list=(arr,kind,cls)=>`<div class="steps ${cls||""}">${arr.map((x,i)=>{const ck=!!r[kind][i],isCur=kind==="steps"&&i===cur&&r.status==="progress";
+    return`<label class="step ${ck?"ck":""} ${isCur?"cur":""}"><input type="checkbox" data-a="tick" data-kind="${kind}" data-i="${i}" ${ck?"checked":""}><span class="box">${ck?I.check:""}</span>${kind==="steps"?`<span class="num mono">${i+1}</span>`:""}<p>${inline(x)}</p>${isCur?'<span class="now">Now</span>':""}</label>`}).join("")}</div>`;
+  const pri=r.status==="backlog"||r.status==="todo"||r.status==="skipped"?`<button class="btn pri" data-a="begin">Start this skill</button>`
+    :r.status==="progress"?`${cur>=0?`<button class="btn pri" data-a="next-step">Complete step ${cur+1}</button>`:""}<button class="btn ${cur<0?"pri":""}" data-a="finish">Mark done</button>`
+    :`<button class="btn" data-a="reopen">Reopen</button>`;
+  const needProfile=!S.setup.done&&s.name!=="start";
+  const dr=ui.draft[s.name]||{};
+  return`<div class="skill"><article class="doc">
+   <div style="display:flex;align-items:center;gap:10px;color:var(--tx3)"><span class="mono">${s.id}</span><span>${AREA[s.area].n}</span>${d?`<span>Day ${d}</span>`:""}</div>
+   <h1>${esc(s.title)}</h1><p class="lead">${esc(s.purpose)}</p>
+   ${needProfile?`<div class="flag" style="margin-top:14px"><span>This skill reads your company profile, and Setup is not finished. <a href="#setup" style="color:var(--accent-tx);font-weight:500">Finish Setup</a> so it does not have to assume a country.</span></div>`:""}
+   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;align-items:center">${pri}<div class="pmeter" style="max-width:160px;margin-left:6px"><i style="width:${t.steps/t.stepsN*100}%"></i></div><span class="mono" style="color:var(--tx3)">${t.steps}/${t.stepsN} steps</span></div>
+   ${ui.confirm==="finish"?`<div class="confirm"><p>${[op.steps&&op.steps+" step"+(op.steps>1?"s":""),op.dels&&op.dels+" deliverable"+(op.dels>1?"s":""),op.gates&&op.gates+" approval"+(op.gates>1?"s":"")].filter(Boolean).join(", ")} still open. Mark this skill done anyway?</p><button class="btn" data-a="cancel">Keep working</button><button class="btn pri" data-a="finish-yes">Mark done</button></div>`:""}
+   ${s.inputs.length?`<section class="sec"><h2>Have ready</h2><ul class="plain">${s.inputs.map(x=>`<li>${inline(x)}</li>`).join("")}</ul></section>`:""}
+   <section class="sec"><h2>Workflow <i>${t.steps}/${t.stepsN}</i></h2>${list(s.workflow,"steps")}</section>
+   <section class="sec"><h2>Deliverables <i>${t.dels}/${t.delsN}</i></h2>${list(s.deliverables,"dels")}</section>
+   <section class="sec"><h2>Your approvals <i>${t.gates}/${t.gatesN}</i></h2>${list(s.gates,"gates","gates")}<p class="hint">Claude does not take these decisions alone. Ticking one records it in Decisions.</p></section>
+   <section class="sec"><h2>Run with Claude</h2><div class="claude"><div class="bar2"><p>${cloud.sample?"Draft the deliverables here, or copy a prompt into a Claude session that has the plugin installed.":"Copy a prompt into a Claude session that has the solofounder-os plugin installed."}</p>
+     <button class="btn" data-a="copy-prompt">${I.copy}Copy prompt</button>${cloud.sample?`<button class="btn pri" data-a="draft" ${dr.busy?"disabled":""}>${I.spark}${dr.busy?"Drafting":dr.text?"Draft again":"Draft here"}</button>`:""}</div>
+     <div class="out" id="out" ${dr.text||dr.err||dr.busy?"":"hidden"}>${dr.err?`<p style="color:var(--crit)">${esc(dr.err)}</p>`:dr.text?md(dr.text):'<p style="color:var(--tx3)">Thinking</p>'}</div></div>
+     <p class="hint">${["legal","finance"].includes(s.area)?"A draft made here has no web research: it lists the sources to check and does not verify rules for your country. Have a locally licensed professional review it.":"Drafts made here use your profile, notes, and progress. Check every fact before you rely on it."}${dr.text&&!dr.busy?` <button class="btn ghost" data-a="copy-out" style="height:22px;padding:0 6px">${I.copy}Copy draft</button>`:""}</p></section>
+   <section class="sec"><h2><label for="notes">Notes</label></h2><textarea class="note" id="notes" placeholder="Facts, links, and answers for this skill. Saved as you type.">${esc(r.notes)}</textarea></section>
+  </article>
+  <aside class="props" aria-label="Properties">
+   <h3>Properties</h3>
+   <div class="prop"><span>Status</span>${I.status(r.status,t.steps/t.stepsN)}<select class="sel" id="status-sel" aria-label="Status">${STATUS.map(([k,l])=>`<option value="${k}" ${r.status===k?"selected":""}>${l}</option>`).join("")}</select></div>
+   <div class="prop"><span>Function</span><a href="#area-${s.area}">${AREA[s.area].n}</a></div>
+   <div class="prop"><span>Sprint</span>${d?`<a href="#sprint">Day ${d}</a>`:"After launch"}</div>
+   <div class="prop"><span>Plugin skill</span><span class="mono" style="overflow-wrap:anywhere">${s.name}</span></div>
+   <h3>Hands off to</h3>
+   ${s.handoffs.map(h=>{const m=h.match(/`([a-z0-9-]+)`/g)||[];return`<div class="act" style="color:var(--tx2)">${inline(h)}</div>`}).join("")}
+   <h3>Activity</h3>
+   ${S.activity.filter(a=>a.skill===s.name).slice(0,6).map(a=>`<div class="act">${esc(a.text)} · ${ago(a.t)}</div>`).join("")||'<div class="act">Nothing yet.</div>'}
+  </aside></div>`}
+function inline(x){return esc(x).replace(/`([a-z0-9-]+)`/g,(m,n)=>SK[n]?`<a href="#skill-${n}" style="color:var(--accent-tx)">${esc(SK[n].title)}</a>`:`<code class="mono">${n}</code>`).replace(/~~([A-Za-z-]+(?: [a-z]+)?)/g,"your $1")}
+
+/* ---------- markdown (escaped first) ---------- */
+function md(src){const L=esc(src).split("\n");let h="",i=0,list=null;const il=t=>t.replace(/`([^`]+)`/g,"<code>$1</code>").replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>").replace(/(^|[^*])\*([^*\s][^*]*)\*/g,"$1<em>$2</em>");
+  const close=()=>{if(list){h+=`</${list}>`;list=null}};
+  while(i<L.length){let l=L[i];
+    if(/^```/.test(l)){close();let c="";i++;while(i<L.length&&!/^```/.test(L[i]))c+=L[i++]+"\n";i++;h+=`<pre><code>${c}</code></pre>`;continue}
+    if(/^\s*\|.*\|\s*$/.test(l)){close();const rows=[];while(i<L.length&&/^\s*\|.*\|\s*$/.test(L[i]))rows.push(L[i++]);
+      h+="<table>"+rows.filter(r=>!/^\s*\|[\s:|-]+\|\s*$/.test(r)).map((r,j)=>"<tr>"+r.trim().slice(1,-1).split("|").map(c=>`<${j?"td":"th"}>${il(c.trim())}</${j?"td":"th"}>`).join("")+"</tr>").join("")+"</table>";continue}
+    let m;
+    if(m=l.match(/^(#{1,4})\s+(.*)/)){close();h+=`<h${m[1].length<3?3:4}>${il(m[2])}</h${m[1].length<3?3:4}>`}
+    else if(m=l.match(/^\s*[-*]\s+(.*)/)){if(list!=="ul"){close();h+="<ul>";list="ul"}h+=`<li>${il(m[1])}</li>`}
+    else if(m=l.match(/^\s*\d+[.)]\s+(.*)/)){if(list!=="ol"){close();h+="<ol>";list="ol"}h+=`<li>${il(m[1])}</li>`}
+    else if(!l.trim())close();
+    else{close();h+=`<p>${il(l)}</p>`}
+    i++}
+  close();return h}
+
+/* ---------- Claude prompts ---------- */
+function progressText(s){const r=run(s.name);return s.workflow.map((w,i)=>`${r.steps[i]?"[x]":"[ ]"} ${i+1}. ${w}`).join("\n")}
+function copyPrompt(s){const r=run(s.name),cur=s.workflow.findIndex((_,i)=>!r.steps[i]);
+  return`Use the solofounder-os plugin skill \`${s.name}\` (${s.title}).
+
+Here is my company profile. Save it as solofounder/company-profile.md if it is not there yet.
+
+${profileMD()}
+Progress on this skill so far:
+${progressText(s)}
+${r.notes.trim()?"\nMy notes:\n"+r.notes.trim()+"\n":""}
+${cur>=0?`Continue from step ${cur+1}. `:"All steps are ticked; review the deliverables with me. "}Ask me for anything the profile does not answer, and ask before any action that contacts someone, spends money, or cannot be undone.`}
+function draftPrompt(s){const r=run(s.name),jur=["legal","finance"].includes(s.area);
+  return`You are running one skill from SoloFounder OS, a set of operating procedures for a solo founder building an AI company. Follow the skill below for this founder and write the deliverables as working drafts.
+
+SKILL: ${s.title}
+PURPOSE: ${s.purpose}
+WORKFLOW:
+${s.workflow.map((w,i)=>`${i+1}. ${w}`).join("\n")}
+DELIVERABLES:
+${s.deliverables.map(w=>"- "+w).join("\n")}
+DECISIONS RESERVED FOR THE FOUNDER (do not take these; present options and a recommendation):
+${s.gates.map(w=>"- "+w).join("\n")}
+
+RULES:
+- Use only the facts in the company profile and notes. Where a needed fact is missing or TBD, do not invent it: list it under "Questions for you".
+- Never assume a country, currency, or tool that is not in the profile.
+- You have no web access in this run. ${jur?"Do not state jurisdiction-specific rules, rates, thresholds, deadlines, or fees as fact. Name the primary sources to consult (registry, tax authority, regulator) for the founder's jurisdictions, and say what to look up in each. Label the output as a draft for review by a locally licensed "+(s.area==="legal"?"lawyer":"accountant or tax adviser")+" and end with the questions to put to them.":"Mark every estimate and assumption as an assumption."}
+- Do not fabricate customers, prospects, metrics, quotes, or citations.
+- Write in plain Markdown: short headings, lists, and tables where they help. No preamble.
+
+COMPANY PROFILE:
+${profileMD()}
+FOUNDER NOTES FOR THIS SKILL:
+${r.notes.trim()||"(none)"}
+
+PROGRESS:
+${progressText(s)}
+
+Write: (1) a short "Where this stands" paragraph, (2) each deliverable as a draft as far as the facts allow, (3) "Decisions for you" with options and your recommendation, (4) "Questions for you".`}
+async function draft(n){const s=SK[n];if(!cloud.sample)return;const d=ui.draft[n]={busy:true,text:"",err:""};render();
+  try{const res=await cloud.sample(draftPrompt(s),{modelTier:"default",cache:false,onText:({text})=>{d.text=text;if(route.v==="skill"&&route.n===n){const o=document.getElementById("out");if(o){o.hidden=false;o.innerHTML=md(text)}}}});
+    d.text=res.text||d.text;d.busy=false;await saveOut(n,d.text);log(n,"Drafted with Claude");mut(n);touch()}
+  catch(e){d.busy=false;const c=e&&e.code;if(c==="not_granted"){cloud.sample=null;d.err=""}else d.err=c==="rate_limited"?"Claude is busy. Try again in a minute.":"The draft did not finish. Try again."+(e&&e.text?"":"");if(e&&e.text)d.text=e.text}
+  if(route.v==="skill"&&route.n===n)render()}
+
+/* ---------- overlays ---------- */
+function palItems(q){const it=[["Setup","setup"],["Launch sprint","sprint"],["Active","active"],["Decisions","decisions"],["Company profile","profile"]].map(([l,h])=>({l,e:"Go to",f:()=>nav(h)}))
+   .concat(AREAS.map(a=>({l:a.n,e:"Function",f:()=>nav("area-"+a.k)})))
+   .concat(DATA.skills.map(s=>({l:s.title,e:s.id,k:s.name+" "+AREA[s.area].n,f:()=>nav("skill-"+s.name)})))
+   .concat([["Light theme","light"],["Dark theme","dark"],["Match system theme","system"]].map(([l,t])=>({l,e:"Appearance",f:()=>{S.prefs.theme=t;applyPrefs();touch()}})))
+   .concat(PALETTES.map(p=>({l:p[1]+" palette",e:"Appearance",f:()=>{S.prefs.palette=p[0];applyPrefs();touch()}})));
+  const w=q.toLowerCase().split(/\s+/).filter(Boolean);return it.filter(x=>w.every(t=>(x.l+" "+x.e+" "+(x.k||"")).toLowerCase().includes(t))).slice(0,40)}
+function renderOverlay(){const o=document.getElementById("overlay");let h="";
+  if(ui.pal){const items=palItems(ui.pal.q);ui.pal.items=items;ui.pal.i=Math.min(ui.pal.i,Math.max(items.length-1,0));
+    h+=`<div class="ov" data-a="close-ov"><div class="pal" role="dialog" aria-label="Search"><input id="pal-in" placeholder="Search skills, functions, and commands" value="${esc(ui.pal.q)}" autocomplete="off" aria-controls="pal-list">
+     <ul id="pal-list" role="listbox">${items.map((x,i)=>`<li role="option" data-a="pal-pick" data-i="${i}" aria-selected="${i===ui.pal.i}"><span>${esc(x.l)}</span><em class="${/^[A-Z]{3}-/.test(x.e)?"mono":""}">${esc(x.e)}</em></li>`).join("")||'<li><span style="color:var(--tx3)">No match</span></li>'}</ul></div></div>`}
+  if(ui.pop){const p=S.prefs;h+=`<div class="pop" role="dialog" aria-label="Appearance"><h3>Theme</h3><div class="seg" role="group" aria-label="Theme">${[["system","System"],["light","Light"],["dark","Dark"]].map(([k,l])=>`<button data-a="theme" data-v="${k}" aria-pressed="${p.theme===k}">${l}</button>`).join("")}</div>
+     <h3>Palette</h3><div class="sw" role="group" aria-label="Palette">${PALETTES.map(([k,l,hue,c])=>`<button data-a="palette-set" data-v="${k}" aria-pressed="${p.palette===k}" aria-label="${l}" title="${l}"><i style="background:oklch(98% .008 ${hue})"></i><i style="background:oklch(19% .012 ${hue})"></i><u style="background:oklch(56% ${c} ${hue})"></u></button>`).join("")}</div>
+     <div style="color:var(--tx3);font-size:11.5px;margin:-6px 0 0">${PALETTES.find(x=>x[0]===p.palette)[1]}: light and dark tuned together.</div></div>`}
+  o.innerHTML=h;if(ui.pal){const inp=document.getElementById("pal-in");inp.focus();inp.setSelectionRange(inp.value.length,inp.value.length);const sel=o.querySelector('[aria-selected="true"]');if(sel)sel.scrollIntoView({block:"nearest"})}}
+let toastT;function toast(t){document.querySelectorAll(".toast").forEach(e=>e.remove());const d=document.createElement("div");d.className="toast";d.setAttribute("role","status");d.textContent=t;document.body.appendChild(d);clearTimeout(toastT);toastT=setTimeout(()=>d.remove(),1800)}
+async function copy(text,okMsg){try{await navigator.clipboard.writeText(text);toast(okMsg)}catch(e){const el=document.getElementById("profile-md")||document.getElementById("out");if(el){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)}toast("Copy is blocked here. Select the text and copy it.")}}
+
+/* ---------- events ---------- */
+function validateStep(st){ui.errs={};if(st===0&&!(S.profile.hq_country||"").trim())ui.errs.hq_country="Tell us the country, or write TBD if it is undecided.";return!Object.keys(ui.errs).length}
+const A={
+ menu(){document.getElementById("side").classList.toggle("open")},
+ palette(){ui.pal={q:"",i:0};ui.pop=false;renderOverlay()},
+ pop(){ui.pop=!ui.pop;ui.pal=null;renderOverlay()},
+ "close-ov"(el,e){if(e.target===el){ui.pal=null;renderOverlay()}},
+ "pal-pick"(el){const x=ui.pal.items[+el.dataset.i];ui.pal=null;renderOverlay();if(x){x.f();render()}},
+ theme(el){S.prefs.theme=el.dataset.v;applyPrefs();touch();renderOverlay()},
+ "palette-set"(el){S.prefs.palette=el.dataset.v;applyPrefs();touch();renderOverlay()},
+ cycle(el,e){e.preventDefault();e.stopPropagation();const n=el.dataset.n,o=["backlog","todo","progress","done"],c=run(n).status;setStatus(n,o[(o.indexOf(c)+1)%o.length]||"backlog");touch();render()},
+ jump(el){const t=document.getElementById("day-"+el.dataset.d);if(t)t.scrollIntoView({block:"start"})},
+ "start-sprint"(){S.sprint.start=today();log("launch-sprint","Sprint started");touch();render()},
+ seg(el){S.profile[el.dataset.k]=el.dataset.v;touch();render()},
+ "setup-step"(el){const i=+el.dataset.i;if(i>S.setup.step&&!validateStep(S.setup.step)){render();return}S.setup.step=i;touch();render();document.getElementById("scroll").scrollTop=0},
+ "setup-next"(){if(!validateStep(S.setup.step)){render();const b=document.querySelector(".bad");if(b)b.focus();return}S.setup.step=Math.min(3,S.setup.step+1);touch();render();document.getElementById("scroll").scrollTop=0},
+ "setup-back"(){S.setup.step=Math.max(0,S.setup.step-1);touch();render();document.getElementById("scroll").scrollTop=0},
+ "setup-finish"(){if(!validateStep(0)){S.setup.step=0;render();return}S.setup.done=true;const r=mut("start");r.steps=SK.start.workflow.map((_,i)=>i<4||!!r.steps[i]);r.dels=SK.start.deliverables.map((_,i)=>i<1||!!r.dels[i]);r.gates[0]=true;if(r.status!=="done")setStatus("start","progress");
+   if(!S.decisions.some(d=>d.key==="hq"))S.decisions.unshift({date:today(),text:"HQ: "+S.profile.hq_country+(S.profile.hq_region?" ("+S.profile.hq_region+")":""),why:"Set in Setup. Governs legal, tax, and privacy skills.",skill:"start",key:"hq"});
+   log("start","Company profile confirmed");touch();render();toast("Profile confirmed")},
+ "copy-profile"(){copy(profileMD(),"Profile copied")},
+ begin(){setStatus(route.n,"progress");if(!S.sprint.start&&dayOf(route.n)){S.sprint.start=today()}touch();render()},
+ "next-step"(){const s=SK[route.n],r=mut(route.n),i=s.workflow.findIndex((_,j)=>!r.steps[j]);if(i>=0){r.steps[i]=true;for(let j=0;j<s.workflow.length;j++)r.steps[j]=!!r.steps[j];log(route.n,"Completed step "+(i+1))}touch();render()},
+ finish(){if(openItems(route.n).all){ui.confirm="finish";render()}else A["finish-yes"]()},
+ "finish-yes"(){ui.confirm=null;setStatus(route.n,"done");touch();render();toast("Marked done")},
+ reopen(){setStatus(route.n,"progress");touch();render()},
+ cancel(){ui.confirm=null;render()},
+ reset(){ui.confirm="reset";render()},
+ "reset-yes"(){const prefs=S.prefs;S=fresh();S.prefs=prefs;ui.draft={};try{Object.keys(localStorage).filter(k=>k.startsWith("sfos.out.")).forEach(k=>localStorage.removeItem(k))}catch(e){}touch();nav("setup");toast("Workspace erased")},
+ "copy-prompt"(){copy(copyPrompt(SK[route.n]),"Prompt copied")},
+ "copy-out"(){copy((ui.draft[route.n]||{}).text||"","Draft copied")},
+ draft(){draft(route.n)},
+ "del-dec"(el){S.decisions.splice(+el.dataset.i,1);touch();render()}
+};
+document.addEventListener("click",e=>{const el=e.target.closest("[data-a]");
+  if(ui.pop&&!e.target.closest(".pop")&&!(el&&el.dataset.a==="pop")){ui.pop=false;renderOverlay()}
+  if(!el||el.tagName==="INPUT")return;const f=A[el.dataset.a];if(f)f(el,e)});
+document.addEventListener("change",e=>{const t=e.target;
+  if(t.dataset.a==="tick"){const n=route.n,s=SK[n],r=mut(n),k=t.dataset.kind,i=+t.dataset.i,len={steps:s.workflow.length,dels:s.deliverables.length,gates:s.gates.length}[k];
+    for(let j=0;j<len;j++)r[k][j]=!!r[k][j];r[k][i]=t.checked;
+    if(t.checked&&["backlog","todo"].includes(r.status))setStatus(n,"progress");
+    if(k==="gates"){const key=n+":"+i;if(t.checked){S.decisions.unshift({date:today(),text:"Approved: "+s.gates[i],why:"",skill:n,key});log(n,"Approved: "+s.gates[i])}else S.decisions=S.decisions.filter(d=>d.key!==key)}
+    touch();render()}
+  else if(t.id==="status-sel"){setStatus(route.n,t.value);touch();render()}
+  else if(t.id==="sprint-start"){S.sprint.start=t.value||"";touch();render()}});
+document.addEventListener("input",e=>{const t=e.target;
+  if(t.id==="notes"){mut(route.n).notes=t.value;touch()}
+  else if(t.dataset.k&&t.id.startsWith("f-")){S.profile[t.dataset.k]=t.value;if(ui.errs[t.dataset.k]){delete ui.errs[t.dataset.k];t.classList.remove("bad")}touch();if(t.dataset.k==="name")renderSide()}
+  else if(t.id==="pal-in"){ui.pal.q=t.value;ui.pal.i=0;const items=palItems(t.value);ui.pal.items=items;
+    document.getElementById("pal-list").innerHTML=items.map((x,i)=>`<li role="option" data-a="pal-pick" data-i="${i}" aria-selected="${i===0}"><span>${esc(x.l)}</span><em class="${/^[A-Z]{3}-/.test(x.e)?"mono":""}">${esc(x.e)}</em></li>`).join("")||'<li><span style="color:var(--tx3)">No match</span></li>'}});
+document.addEventListener("submit",e=>{e.preventDefault();if(e.target.dataset.f==="decision"){const t=document.getElementById("dec-text").value.trim(),w=document.getElementById("dec-why").value.trim();if(!t)return;S.decisions.unshift({date:today(),text:t,why:w});touch();render();document.getElementById("dec-text").focus()}});
+document.addEventListener("keydown",e=>{const typing=/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName);
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==="k"){e.preventDefault();A.palette();return}
+  if(ui.pal){if(e.key==="Escape"){ui.pal=null;renderOverlay()}
+    else if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();const n=ui.pal.items.length;if(!n)return;ui.pal.i=(ui.pal.i+(e.key==="ArrowDown"?1:n-1))%n;document.querySelectorAll("#pal-list li").forEach((li,i)=>{li.setAttribute("aria-selected",i===ui.pal.i);if(i===ui.pal.i)li.scrollIntoView({block:"nearest"})})}
+    else if(e.key==="Enter"){e.preventDefault();const x=ui.pal.items[ui.pal.i];ui.pal=null;renderOverlay();if(x){x.f();render()}}return}
+  if(e.key==="Escape"){if(ui.pop){ui.pop=false;renderOverlay()}document.getElementById("side").classList.remove("open");return}
+  if(typing)return;
+  if(e.key==="/"){e.preventDefault();A.palette();return}
+  if(["j","k","ArrowDown","ArrowUp"].includes(e.key)){const rows=[...document.querySelectorAll("#view a.row")];if(!rows.length)return;e.preventDefault();const i=rows.indexOf(document.activeElement),d=e.key==="j"||e.key==="ArrowDown"?1:-1;rows[Math.max(0,Math.min(rows.length-1,i<0?0:i+d))].focus()}});
+window.addEventListener("hashchange",go);
+document.addEventListener("visibilitychange",()=>{if(document.hidden&&dirty){clearTimeout(saveTimer);flush()}});
+
+/* ---------- boot ---------- */
+applyPrefs();
+fetch("skills.json").then(r=>{if(!r.ok)throw 0;return r.json()}).then(async d=>{DATA=d;SK=Object.fromEntries(d.skills.map(s=>[s.name,s]));go();await initCloud();ensureOut();window.__ready=true})
+ .catch(()=>{document.getElementById("view").innerHTML='<div class="empty">The skill library did not load. Reload the page.</div>'});
+async function ensureOut(){const r=route;if(r.v==="skill"&&!ui.draft[r.n]){const t=await loadOut(r.n);if(t&&!ui.draft[r.n]){ui.draft[r.n]={text:t};if(route.v==="skill"&&route.n===r.n)render()}}}
+window.addEventListener("hashchange",ensureOut);
+</script>
+</body>
+</html>
