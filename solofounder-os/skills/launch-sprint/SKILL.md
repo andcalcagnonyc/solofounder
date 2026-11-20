@@ -8,7 +8,7 @@ metadata:
 
 # Launch Sprint: Idea to Operating Company in 14 Days
 
-Orchestrate every solofounder skill into one 14-day plan with daily goals and exit gates. The sprint produces a company that is formed or in formation, a product in the hands of pilot customers, a working revenue funnel, and operating routines for finance, operations, and support.
+Orchestrate every solofounder-os skill into one 14-day plan with daily goals and exit gates. The sprint produces a company that is formed or in formation, a product in the hands of pilot customers, a working revenue funnel, and operating routines for finance, operations, and support.
 
 ## Before starting
 

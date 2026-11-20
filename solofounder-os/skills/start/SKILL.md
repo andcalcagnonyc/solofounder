@@ -1,6 +1,6 @@
 ---
 name: start
-description: "This skill should be used when the user says \"start solofounder\", \"set up my company profile\", \"I want to launch an AI company\", \"where do I begin\", \"onboard me\", \"update my company profile\", or invokes any solofounder skill before a company profile exists. It runs the founder intake, asks where the HQ will be, and routes to the right skills."
+description: "This skill should be used when the user says \"start solofounder-os\", \"start solofounder\", \"set up my company profile\", \"I want to launch an AI company\", \"where do I begin\", \"onboard me\", \"update my company profile\", or invokes any solofounder skill before a company profile exists. It runs the founder intake, asks where the HQ will be, and routes to the right skills."
 metadata:
   version: "0.1.0"
   area: core
@@ -8,7 +8,7 @@ metadata:
 
 # Start: Founder Intake and Company Profile
 
-Create the single source of truth every other solofounder skill reads: `solofounder/company-profile.md`. Legal, tax, accounting, privacy, employment, and outreach rules all depend on where the company and its customers are, so collect that first and never assume it.
+Create the single source of truth every other solofounder-os skill reads: `solofounder/company-profile.md`. Legal, tax, accounting, privacy, employment, and outreach rules all depend on where the company and its customers are, so collect that first and never assume it.
 
 ## When to run
 

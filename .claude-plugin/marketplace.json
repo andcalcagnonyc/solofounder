@@ -1,13 +1,13 @@
 {
-  "name": "solofounder",
-  "description": "Marketplace for the solofounder plugin: skills for a solo founder to launch and run an AI company with Claude.",
+  "name": "solofounder-os",
+  "description": "Marketplace for the solofounder-os plugin: skills for a solo founder to launch and run an AI company with Claude.",
   "owner": {
     "name": "Andrea Calcagno"
   },
   "plugins": [
     {
-      "name": "solofounder",
-      "source": "./solofounder",
+      "name": "solofounder-os",
+      "source": "./solofounder-os",
       "description": "Launch and run an Applied AI or Agentic AI company end to end as a solo founder with Claude.",
       "version": "0.1.0",
       "category": "productivity"

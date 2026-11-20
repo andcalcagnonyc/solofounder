@@ -3,7 +3,7 @@
 import json, re, sys, pathlib
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
-ROOT = REPO / "solofounder"
+ROOT = REPO / "solofounder-os"
 REQUIRED_SECTIONS = ["## Workflow", "## Deliverables", "## Founder approval gates", "## Guardrails"]
 AREAS = {"core", "legal", "finance", "marketing", "sales", "product", "eng", "ops", "support"}
 

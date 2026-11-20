@@ -1,8 +1,8 @@
-# solofounder
+# solofounder-os
 
 **A Claude plugin that gives one founder the skills of a full company.**
 
-`solofounder` packages 57 skills that let a single founder launch and run an Applied AI or Agentic AI company end to end with Claude: legal, finance and accounting, marketing, sales, product, engineering and QA, cloud operations, and customer support. A 14-day launch sprint ties them together.
+`solofounder-os` packages 57 skills that let a single founder launch and run an Applied AI or Agentic AI company end to end with Claude: legal, finance and accounting, marketing, sales, product, engineering and QA, cloud operations, and customer support. A 14-day launch sprint ties them together.
 
 The plugin is jurisdiction-aware. The first thing it does is ask where the HQ will be, and every legal, tax, accounting, privacy, employment, and outreach skill works from that answer instead of assuming a country.
 
@@ -12,12 +12,12 @@ The plugin is jurisdiction-aware. The first thing it does is ask where the HQ wi
 
 ```
 /plugin marketplace add andcalcagnonyc/solofounder
-/plugin install solofounder@solofounder
+/plugin install solofounder-os@solofounder-os
 ```
 
-**Claude desktop app**: in Customize > Plugins, add a marketplace from the GitHub repo `andcalcagnonyc/solofounder`, then install `solofounder`.
+**Claude desktop app**: in Customize > Plugins, add a marketplace from the GitHub repo `andcalcagnonyc/solofounder`, then install `solofounder-os`.
 
-Then say: `start solofounder`.
+Then say: `start solofounder-os`.
 
 ## How it works
 
@@ -52,13 +52,13 @@ Each skill has the same structure: purpose, inputs, numbered workflow, deliverab
 | 11-12 | Sales playbook, CRM and funnel, outbound, website live | G4 Go-to-market |
 | 13-14 | Support, billing, pilot onboarding, operating routines | G5 Launch |
 
-Full plan: [`solofounder/skills/launch-sprint/references/14-day-plan.md`](solofounder/skills/launch-sprint/references/14-day-plan.md).
+Full plan: [`solofounder-os/skills/launch-sprint/references/14-day-plan.md`](solofounder-os/skills/launch-sprint/references/14-day-plan.md).
 
 **What two weeks does and does not cover.** The work Claude and the founder control fits in the sprint. Steps on third-party clocks (company registration, bank account, tax registrations, trademarks, enterprise procurement) take from a day to several weeks depending on the country; the sprint starts them on day 1 and runs everything else in parallel.
 
 ## Tools
 
-Skills refer to tools by category (`~~CRM`, `~~accounting system`, `~~helpdesk`, and so on) so the plugin works with any stack. See [`CONNECTORS.md`](solofounder/CONNECTORS.md). Without a connected tool, a skill produces ready-to-use files and manual steps.
+Skills refer to tools by category (`~~CRM`, `~~accounting system`, `~~helpdesk`, and so on) so the plugin works with any stack. See [`CONNECTORS.md`](solofounder-os/CONNECTORS.md). Without a connected tool, a skill produces ready-to-use files and manual steps.
 
 ## Safety model
 
@@ -93,7 +93,7 @@ Seven scenario runs cover 6 of the 57 skills, each run once and graded by a mode
 
 ```
 .claude-plugin/        marketplace.json
-solofounder/           the plugin: .claude-plugin/plugin.json, skills/, CONNECTORS.md
+solofounder-os/        the plugin: .claude-plugin/plugin.json, skills/, CONNECTORS.md
 tests/                 validators, synthetic cases, scenarios, rubric, results
 examples/              outputs of the scenario tests (synthetic)
 ```

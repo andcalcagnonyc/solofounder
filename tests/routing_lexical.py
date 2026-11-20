@@ -6,7 +6,7 @@ import json, math, re, sys, pathlib
 from collections import Counter
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
-ROOT = REPO / "solofounder"
+ROOT = REPO / "solofounder-os"
 STOP = set("a an the and or to of for my i me is in on with this that be should used when user asks needs it do what how are from at by as we our you your".split())
 
 def toks(s):

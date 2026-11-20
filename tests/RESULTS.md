@@ -1,5 +1,7 @@
 # Validation Results
 
+Plugin name: `solofounder-os` (tested under its earlier name `solofounder`; only the name and folder layout changed afterwards).
+
 Plugin version 0.1.0 · test date 2026-11-20 · model under test: Claude Fable 5.2 · all test data synthetic
 
 ## Summary KPIs
@@ -98,7 +100,7 @@ Notable behaviour: in run C1 the skill's country check removed the 40 German acc
 ## Reproduce
 
 ```
-claude plugin validate ./solofounder
+claude plugin validate ./solofounder-os
 python3 tests/validate_structure.py --json tests/results/structure.json
 python3 tests/routing_lexical.py --json tests/results/routing_lexical.json
 ```
