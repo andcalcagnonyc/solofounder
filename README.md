@@ -15,7 +15,7 @@ The plugin is jurisdiction-aware. The first thing it does is ask where the HQ wi
 /plugin install solofounder@solofounder
 ```
 
-**Claude desktop app**: download [`dist/solofounder.plugin`](dist/solofounder.plugin) and add it as a plugin.
+**Claude desktop app**: in Customize > Plugins, add a marketplace from the GitHub repo `andcalcagnonyc/solofounder`, then install `solofounder`.
 
 Then say: `start solofounder`.
 
