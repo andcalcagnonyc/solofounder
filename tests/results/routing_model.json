@@ -1,0 +1,19 @@
+{
+  "cases": 114,
+  "answered": 114,
+  "invalid_skill_names": 0,
+  "top1_pct": 100.0,
+  "top2_pct": 100.0,
+  "per_area_top1": {
+    "core": "8/8",
+    "eng": "16/16",
+    "finance": "14/14",
+    "legal": "18/18",
+    "marketing": "14/14",
+    "ops": "10/10",
+    "product": "12/12",
+    "sales": "12/12",
+    "support": "10/10"
+  },
+  "misses": []
+}

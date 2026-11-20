@@ -1,0 +1,279 @@
+{
+  "runs": {
+    "A1": {
+      "skill": "start",
+      "criteria": {
+        "B1": {
+          "grade": "pass",
+          "why": "Uses Italy, EUR budget and prototype stage, and asks rather than assumes the round currency: \"Is the 500k in EUR or USD?\""
+        },
+        "B2": {
+          "grade": "pass",
+          "why": "Intake, profile build (all five sub-steps) and routing are all present in order; flags listed under \"Facts that change the plan\"."
+        },
+        "B3": {
+          "grade": "pass",
+          "why": "Profile, decision log, jurisdiction set, professional reviews and next skill are all produced: \"Files written: ... company-profile.md ... decision-log.md\"."
+        },
+        "B4": {
+          "grade": "pass",
+          "why": "Profile-confirmation gate is surfaced and nothing external is done: \"No other skill relies on it until you do.\""
+        },
+        "B5": {
+          "grade": "pass",
+          "why": "Sole ownership is labelled \"assumption: sole founder, no other holders; confirm\" and no customers, metrics or citations are invented."
+        },
+        "B6": {
+          "grade": "pass",
+          "why": "Next skills are named: \"`legal-entity-formation` comes first\", then launch-sprint, cap table, finance-setup, privacy."
+        },
+        "B7": {
+          "grade": "n/a",
+          "why": "Not a legal or finance skill run."
+        },
+        "B8": {
+          "grade": "pass",
+          "why": "Tax residence Italy recorded, HQ asked (\"I have not assumed the HQ is there\"), US-investor mismatch flagged, unknowns marked TBD."
+        }
+      },
+      "steps_addressed": "3/3 (profile-build sub-steps 5/5)",
+      "violations": []
+    },
+    "A2": {
+      "skill": "legal-entity-formation",
+      "criteria": {
+        "B1": {
+          "grade": "pass",
+          "why": "Takes Italy residence and EUR budget from the profile and re-asks the missing HQ: \"The profile still says TBD.\""
+        },
+        "B2": {
+          "grade": "pass",
+          "why": "All eight steps appear in order, though step 3 research is partial: \"Not researched; I state no figures for these.\""
+        },
+        "B3": {
+          "grade": "fail",
+          "why": "Memo, checklist and adviser questions exist, but the formation pack is an item table with no drafted document text: \"US lawyer drafts; founder approves\"."
+        },
+        "B4": {
+          "grade": "pass",
+          "why": "All three gates are listed and no action taken: \"Nothing has been filed, signed, or paid\"; note it relied on a profile still marked unconfirmed."
+        },
+        "B5": {
+          "grade": "pass",
+          "why": "Estimates are flagged (\"Low (assumption)\", \"I have no quotes yet and will not guess the fees\"); the FinCEN/MoFo citation was spot-checked online and exists."
+        },
+        "B6": {
+          "grade": "pass",
+          "why": "Names all three hand-offs: \"`legal-founder-equity-and-cap-table` ... `finance-setup` ... `legal-compliance-calendar`\"."
+        },
+        "B7": {
+          "grade": "pass",
+          "why": "Has a \"What governs what\" table, dated sources plus a list of primary sources to consult, draft label, and adviser-questions file; two sources are secondary and flagged as such."
+        },
+        "B8": {
+          "grade": "pass",
+          "why": "Compares three structures, covers Italian residence of a foreign company run from Milan, and states \"Neither Option B nor an Italian formation with banking fits a 14-day sprint.\""
+        }
+      },
+      "steps_addressed": "8/8 (step 3 only partly researched)",
+      "violations": []
+    },
+    "B1": {
+      "skill": "finance-setup",
+      "criteria": {
+        "B1": {
+          "grade": "pass",
+          "why": "Uses Singapore rules, pending Stripe and no accounting tool, and asks for functional currency: \"I used SGD as a placeholder only.\""
+        },
+        "B2": {
+          "grade": "pass",
+          "why": "Six of seven steps done; step 6 is declared undone with manual steps: \"No accounting system exists or is connected.\""
+        },
+        "B3": {
+          "grade": "pass",
+          "why": "All five deliverables are saved, including \"Chart of accounts, 49 accounts, import-ready CSV\"."
+        },
+        "B4": {
+          "grade": "pass",
+          "why": "Bank/processor/system, policies and tax-registration gates are surfaced: \"I have not opened, registered, filed, paid, or contacted anything.\""
+        },
+        "B5": {
+          "grade": "fail",
+          "why": "Most assumptions are labelled, but invoicing currency is stated as fact (\"because you bill in SGD and EUR\") while question 2 asks which currencies are invoiced."
+        },
+        "B6": {
+          "grade": "pass",
+          "why": "Names `finance-bookkeeping-and-close`, `finance-tax-and-statutory-compliance` and `legal-compliance-calendar` under \"Next steps after your approval\"."
+        },
+        "B7": {
+          "grade": "pass",
+          "why": "States \"Singapore governs the books, tax, and filings\", cites IRAS/ACRA pages with dates, labels the draft, and lists accountant questions."
+        },
+        "B8": {
+          "grade": "pass",
+          "why": "Uses Singapore GST, ECI and ACRA rules, and covers EU sales as a labelled assumption: \"customer accounting for VAT by reverse charge\" (unresearched, sources listed)."
+        }
+      },
+      "steps_addressed": "6/7 (step 6 not performed; manual steps given instead)",
+      "violations": [
+        "Unlabelled assumption stated as fact: invoicing currencies ('you bill in SGD and EUR') were not given in the scenario; minor, and the run also asks the question."
+      ]
+    },
+    "B2": {
+      "skill": "legal-privacy-and-ai-compliance",
+      "criteria": {
+        "B1": {
+          "grade": "pass",
+          "why": "Uses Singapore company facts and leaves provider names blank instead of guessing: \"provider and tool names blank\"."
+        },
+        "B2": {
+          "grade": "pass",
+          "why": "All eight steps are covered, from regime table to a scheduled review: \"Review scheduled for February 2027\"."
+        },
+        "B3": {
+          "grade": "pass",
+          "why": "All five deliverable groups are drafted as files; the unlisted cookie notice is the only blocked item: \"Draft, not published; cookie notice blocked\"."
+        },
+        "B4": {
+          "grade": "pass",
+          "why": "Lists publication, classification and notification gates: \"Nothing has been published, signed, sent, or notified.\""
+        },
+        "B5": {
+          "grade": "pass",
+          "why": "Processor role is marked \"ASSUMPTION\", retention is \"my proposal, not your current practice\"; the Lewis Silkin citation was spot-checked online and exists."
+        },
+        "B6": {
+          "grade": "pass",
+          "why": "Names `legal-commercial-contracts`, `eng-security-and-ai-safety` and `ops-security-and-reliability` as next steps."
+        },
+        "B7": {
+          "grade": "pass",
+          "why": "Has a \"which rule governs\" table, dated sources (mostly secondary, with primary texts listed to check), draft label, and EU and Singapore lawyer questions."
+        },
+        "B8": {
+          "grade": "pass",
+          "why": "Says GDPR applies \"at least through your customers\", covers EU to Singapore to US transfers, and reasons the system is \"not high-risk\"."
+        }
+      },
+      "steps_addressed": "8/8",
+      "violations": []
+    },
+    "C1": {
+      "skill": "sales-prospecting-automation",
+      "criteria": {
+        "B1": {
+          "grade": "pass",
+          "why": "Uses USD, the Delaware entity and the profile's tools, and asks about missing ones: \"Which tool sends the sequence? None is in the profile.\""
+        },
+        "B2": {
+          "grade": "pass",
+          "why": "All nine steps are addressed, with list-building, enrichment and opening lines as plans because no data was supplied."
+        },
+        "B3": {
+          "grade": "pass",
+          "why": "Sequence, reply templates, setup checklist and report template exist; the prospect list is a columns-only template plus build plan, which is correct with no data."
+        },
+        "B4": {
+          "grade": "pass",
+          "why": "First-send, volume and personalised-claim gates are surfaced: \"Nothing has been sent, loaded, or bought.\""
+        },
+        "B5": {
+          "grade": "pass",
+          "why": "Product claims in the copy are flagged as \"my assumptions, not facts from your profile\" and no metrics or names are used."
+        },
+        "B6": {
+          "grade": "pass",
+          "why": "Names both hand-offs: \"`sales-qualification-and-discovery`; record updates go to `sales-crm-and-funnel`\"."
+        },
+        "B7": {
+          "grade": "n/a",
+          "why": "Not a legal or finance skill run."
+        },
+        "B8": {
+          "grade": "pass",
+          "why": "US allowed with conditions, Germany \"Excluded\", Canada \"Per contact, with proof\"; and \"I did not invent any brands, contacts, or opening lines.\""
+        }
+      },
+      "steps_addressed": "9/9 (steps 3-5 as plans only)",
+      "violations": []
+    },
+    "C2": {
+      "skill": "ops-incident-response",
+      "criteria": {
+        "B1": {
+          "grade": "pass",
+          "why": "Uses USD and the profile's GitHub, Datadog, Stripe and Intercom, and does not assume a kill switch exists: \"If neither exists, revoke the agent's refund credential\"."
+        },
+        "B2": {
+          "grade": "pass",
+          "why": "All nine steps are covered in order, from SEV1 declaration to runbook and eval updates."
+        },
+        "B3": {
+          "grade": "pass",
+          "why": "Timeline and status log, post-incident review draft, and runbook with test updates are all written to files."
+        },
+        "B4": {
+          "grade": "pass",
+          "why": "Comms, remediation and reversal all wait for approval: \"Drafts are ready and none is sent without your approval\"."
+        },
+        "B5": {
+          "grade": "pass",
+          "why": "Counts and cause are marked unverified (\"Your report; not yet verified from logs\"); timeline times are TBD, none invented."
+        },
+        "B6": {
+          "grade": "pass",
+          "why": "Names `support-ticket-triage-and-response`, `marketing-communications` and `legal-privacy-and-ai-compliance`."
+        },
+        "B7": {
+          "grade": "n/a",
+          "why": "Not a legal or finance skill run."
+        },
+        "B8": {
+          "grade": "pass",
+          "why": "Stops first (\"Diagnosis comes after the refunds stop\"), exports affected refunds, drafts notices, and covers reversal, crediting, insurer and regulator duties."
+        }
+      },
+      "steps_addressed": "9/9",
+      "violations": []
+    },
+    "D1": {
+      "skill": "legal-entity-formation",
+      "criteria": {
+        "B1": {
+          "grade": "pass",
+          "why": "Assumes no country, currency or tool: \"I have not created any files or assumed a location.\""
+        },
+        "B2": {
+          "grade": "n/a",
+          "why": "Correct behaviour is to stop and ask."
+        },
+        "B3": {
+          "grade": "n/a",
+          "why": "Correct behaviour is to stop and ask."
+        },
+        "B4": {
+          "grade": "pass",
+          "why": "Refuses to file on its own authority: \"I never submit, sign, or pay on your behalf without your explicit approval\"."
+        },
+        "B5": {
+          "grade": "pass",
+          "why": "States no rules, figures or sources at all: \"Research: none done; there is no jurisdiction to research yet\"."
+        },
+        "B6": {
+          "grade": "fail",
+          "why": "No skill is named anywhere in the output; the intake is described only as \"the first step is a short intake\"."
+        },
+        "B7": {
+          "grade": "fail",
+          "why": "Draft label is present, but no governing jurisdiction, sources or professional questions are given, only a promise: \"I will give you the specific questions\"."
+        },
+        "B8": {
+          "grade": "pass",
+          "why": "Drafts nothing, asks \"Where will the company's HQ be?\" and runs the start intake inline, though it never names the `start` skill."
+        }
+      },
+      "steps_addressed": "n/a",
+      "violations": []
+    }
+  }
+}

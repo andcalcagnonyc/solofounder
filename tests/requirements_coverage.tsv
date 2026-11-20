@@ -1,0 +1,54 @@
+Legal	Company formation in any country (asks for HQ)	start, legal-entity-formation
+Legal	Company management and housekeeping	legal-compliance-calendar, legal-corporate-governance
+Legal	Capital raise	legal-fundraising, finance-fundraising-and-investor-relations
+Legal	Shareholders and cap table	legal-founder-equity-and-cap-table
+Legal	Minutes and resolutions	legal-corporate-governance
+Legal	Board	legal-corporate-governance
+Legal	Contracts	legal-commercial-contracts
+Legal	Privacy and AI regulation	legal-privacy-and-ai-compliance
+Legal	Employment and contractors	legal-hiring-and-contractors
+Legal	Intellectual property	legal-ip-and-trademarks
+Finance	Finance foundation by legal form and country	finance-setup
+Finance	Accounting cycle (record to report)	finance-bookkeeping-and-close
+Finance	Order to cash	finance-invoicing-and-collections
+Finance	Procure to pay and payroll	finance-payables-and-payroll
+Finance	Tax and statutory compliance by country	finance-tax-and-statutory-compliance
+Finance	Planning, runway, unit economics	finance-planning-and-runway
+Marketing	Demand generation	marketing-demand-generation
+Marketing	Field	marketing-field-and-partners
+Marketing	Communication	marketing-communications
+Marketing	Design	marketing-brand-and-design
+Marketing	Product marketing	marketing-positioning-and-messaging
+Marketing	SEO / GEO	marketing-seo-geo
+Marketing	Website	marketing-website
+Sales	Sales process definition	sales-icp-and-playbook
+Sales	CRM and funnel management	sales-crm-and-funnel
+Sales	Automated lead generation and outreach	sales-prospecting-automation
+Sales	Lead qualification to opportunity	sales-qualification-and-discovery
+Sales	Proposal to won	sales-proposal-and-close
+Sales	Pipeline review and forecast	sales-pipeline-review-and-forecast
+Product	Discovery and validation	product-discovery-and-validation
+Product	Strategy and roadmap	product-strategy-and-roadmap
+Product	Requirements	product-requirements-and-specs
+Product	Pricing	product-pricing-and-packaging
+Product	UX design	product-ux-design
+Product	Analytics and feedback	product-analytics-and-feedback
+Engineering	Architecture	eng-architecture
+Engineering	AI / agent engineering	eng-agent-design, eng-data-and-retrieval
+Engineering	Development workflow	eng-build-workflow
+Engineering	QA: software testing	eng-qa-testing
+Engineering	QA: AI evaluation	eng-evals
+Engineering	Security and AI safety	eng-security-and-ai-safety
+Engineering	Review and release	eng-code-review-and-release
+Cloud Ops	Infrastructure and deployment	ops-infrastructure-and-deploy
+Cloud Ops	Monitoring	ops-observability
+Cloud Ops	Incidents	ops-incident-response
+Cloud Ops	Cost	ops-cost-and-finops
+Cloud Ops	Security, reliability, compliance readiness	ops-security-and-reliability
+Support	Support operations	support-setup
+Support	Support automation	support-ai-agent
+Support	Ticket handling	support-ticket-triage-and-response
+Support	Documentation	support-knowledge-base
+Support	Onboarding and retention	support-customer-success
+End-to-end	Two-week launch orchestration	launch-sprint
+End-to-end	Operating cadence and automation	founder-weekly-review, stack-and-automation-setup

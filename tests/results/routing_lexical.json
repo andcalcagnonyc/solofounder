@@ -1,0 +1,208 @@
+{
+  "cases": 114,
+  "top1_pct": 64.9,
+  "top3_pct": 80.7,
+  "same_area_top1_pct": 72.8,
+  "misses": [
+    {
+      "expected": "founder-weekly-review",
+      "got": "support-setup",
+      "prompt": "Across cash, deals, product and support, what is slipping right now?"
+    },
+    {
+      "expected": "stack-and-automation-setup",
+      "got": "eng-build-workflow",
+      "prompt": "Which software should I subscribe to for each function, and which of it can plug into Claude?"
+    },
+    {
+      "expected": "stack-and-automation-setup",
+      "got": "support-ticket-triage-and-response",
+      "prompt": "I want the bookkeeping, pipeline cleanup and support triage to run on a schedule without me kicking them off."
+    },
+    {
+      "expected": "legal-entity-formation",
+      "got": "start",
+      "prompt": "What do I need to file to get the company officially registered, and how long will it take?"
+    },
+    {
+      "expected": "legal-corporate-governance",
+      "got": "legal-founder-equity-and-cap-table",
+      "prompt": "Do my shareholders need to vote on increasing the share capital, and how do I document that?"
+    },
+    {
+      "expected": "legal-commercial-contracts",
+      "got": "sales-prospecting-automation",
+      "prompt": "A prospect sent over their own master services agreement. Redline it for me."
+    },
+    {
+      "expected": "legal-privacy-and-ai-compliance",
+      "got": "support-setup",
+      "prompt": "We process EU customers' support emails through a language model. What do we owe them under GDPR?"
+    },
+    {
+      "expected": "legal-hiring-and-contractors",
+      "got": "start",
+      "prompt": "I want to bring on a freelance developer based in Poland. What agreement do I need so the code belongs to the company?"
+    },
+    {
+      "expected": "legal-hiring-and-contractors",
+      "got": "marketing-demand-generation",
+      "prompt": "Should my first salesperson in Germany be an employee or go through an employer of record?"
+    },
+    {
+      "expected": "legal-compliance-calendar",
+      "got": "product-strategy-and-roadmap",
+      "prompt": "Tell me every government filing and renewal coming up in the next two months."
+    },
+    {
+      "expected": "legal-ip-and-trademarks",
+      "got": "marketing-brand-and-design",
+      "prompt": "Can somebody else already own the brand name I picked? I'd like to register it in the US and EU."
+    },
+    {
+      "expected": "legal-ip-and-trademarks",
+      "got": "product-discovery-and-validation",
+      "prompt": "One of our libraries is AGPL. Is that a problem for a commercial SaaS?"
+    },
+    {
+      "expected": "finance-setup",
+      "got": "finance-invoicing-and-collections",
+      "prompt": "Do I have to sign up for VAT before I send my first invoice?"
+    },
+    {
+      "expected": "finance-bookkeeping-and-close",
+      "got": "legal-fundraising",
+      "prompt": "Close October and give me the P&L and balance sheet."
+    },
+    {
+      "expected": "finance-invoicing-and-collections",
+      "got": "finance-tax-and-statutory-compliance",
+      "prompt": "Bill Acme 12,000 for the annual plan and make sure the tax treatment is right for a customer in France."
+    },
+    {
+      "expected": "finance-invoicing-and-collections",
+      "got": "support-customer-success",
+      "prompt": "Three customers are more than 30 days late. Draft the reminders."
+    },
+    {
+      "expected": "finance-payables-and-payroll",
+      "got": "finance-bookkeeping-and-close",
+      "prompt": "Prepare this month's salary run for my two employees."
+    },
+    {
+      "expected": "marketing-positioning-and-messaging",
+      "got": "legal-hiring-and-contractors",
+      "prompt": "I can't explain in one sentence why someone should pick us over hiring another analyst. Fix that."
+    },
+    {
+      "expected": "marketing-brand-and-design",
+      "got": "start",
+      "prompt": "I need a name for the company and a visual identity with colours and fonts."
+    },
+    {
+      "expected": "marketing-seo-geo",
+      "got": "support-customer-success",
+      "prompt": "Find the search terms my buyers use and plan articles around them."
+    },
+    {
+      "expected": "marketing-demand-generation",
+      "got": "sales-prospecting-automation",
+      "prompt": "I need 40 qualified leads next month. Design the campaigns and the nurture emails."
+    },
+    {
+      "expected": "marketing-demand-generation",
+      "got": "ops-cost-and-finops",
+      "prompt": "I have 2,000 to spend on ads. Where should it go and how do I track cost per opportunity?"
+    },
+    {
+      "expected": "sales-icp-and-playbook",
+      "got": "ops-security-and-reliability",
+      "prompt": "Buyers keep saying they don't trust an AI to do this. Give me talk tracks."
+    },
+    {
+      "expected": "sales-crm-and-funnel",
+      "got": "sales-proposal-and-close",
+      "prompt": "Set up the deal stages and required fields in HubSpot."
+    },
+    {
+      "expected": "sales-proposal-and-close",
+      "got": "product-pricing-and-packaging",
+      "prompt": "The buyer wants a written offer with pricing by Friday."
+    },
+    {
+      "expected": "sales-proposal-and-close",
+      "got": "eng-security-and-ai-safety",
+      "prompt": "Procurement sent a 120-question security questionnaire before they'll sign."
+    },
+    {
+      "expected": "product-strategy-and-roadmap",
+      "got": "ops-observability",
+      "prompt": "What goes into the first version and what do I leave out?"
+    },
+    {
+      "expected": "product-requirements-and-specs",
+      "got": "product-strategy-and-roadmap",
+      "prompt": "Turn this roadmap item into user stories a coding agent can build from."
+    },
+    {
+      "expected": "product-pricing-and-packaging",
+      "got": "product-ux-design",
+      "prompt": "Design three plans with limits and decide whether to have a free tier."
+    },
+    {
+      "expected": "product-analytics-and-feedback",
+      "got": "ops-observability",
+      "prompt": "Pull together everything customers said this month across tickets and calls into themes."
+    },
+    {
+      "expected": "product-ux-design",
+      "got": "eng-agent-design",
+      "prompt": "Sketch the screens for how a user reviews and approves what the agent wants to do."
+    },
+    {
+      "expected": "eng-architecture",
+      "got": "eng-agent-design",
+      "prompt": "Should this be a single model call, a fixed workflow, or an agent loop, and which model do I use?"
+    },
+    {
+      "expected": "eng-data-and-retrieval",
+      "got": "support-customer-success",
+      "prompt": "Customers upload thousands of PDFs. Build the pipeline that lets the model find the right passages."
+    },
+    {
+      "expected": "eng-build-workflow",
+      "got": "product-requirements-and-specs",
+      "prompt": "Implement the export feature from the spec."
+    },
+    {
+      "expected": "eng-evals",
+      "got": "eng-code-review-and-release",
+      "prompt": "How do I know whether the agent is accurate enough to release?"
+    },
+    {
+      "expected": "eng-code-review-and-release",
+      "got": "product-discovery-and-validation",
+      "prompt": "Look over this pull request before I merge it."
+    },
+    {
+      "expected": "ops-observability",
+      "got": "sales-qualification-and-discovery",
+      "prompt": "Trace every model call with tokens and latency."
+    },
+    {
+      "expected": "ops-incident-response",
+      "got": "support-knowledge-base",
+      "prompt": "The API is returning 500s for every customer right now."
+    },
+    {
+      "expected": "support-setup",
+      "got": "eng-architecture",
+      "prompt": "Which helpdesk should I use, and how should tickets be routed and escalated?"
+    },
+    {
+      "expected": "support-customer-success",
+      "got": "marketing-positioning-and-messaging",
+      "prompt": "We just signed Globex. Plan their onboarding to first value."
+    }
+  ]
+}

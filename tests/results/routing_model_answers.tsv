@@ -1,0 +1,115 @@
+expected	first_choice	second_choice	prompt
+eng-agent-design	eng-agent-design	eng-build-workflow	I need to expose our internal API to the agent as an MCP server.
+eng-agent-design	eng-agent-design	eng-evals	My agent picks the wrong tool half the time. Rewrite its system prompt and tool descriptions.
+eng-architecture	eng-architecture	eng-agent-design	Should this be a single model call, a fixed workflow, or an agent loop, and which model do I use?
+eng-architecture	eng-architecture	eng-build-workflow	Draw up the technical design and stack for the product.
+eng-build-workflow	eng-build-workflow	ops-infrastructure-and-deploy	Create the repository with CI and a CLAUDE.md so I can start coding.
+eng-build-workflow	eng-build-workflow	product-requirements-and-specs	Implement the export feature from the spec.
+eng-code-review-and-release	eng-code-review-and-release	eng-qa-testing	Look over this pull request before I merge it.
+eng-code-review-and-release	eng-code-review-and-release	support-knowledge-base	Write the changelog and release notes for version 1.2 and run the ship checklist.
+eng-data-and-retrieval	eng-data-and-retrieval	eng-architecture	Customers upload thousands of PDFs. Build the pipeline that lets the model find the right passages.
+eng-data-and-retrieval	eng-data-and-retrieval	eng-evals	Answers cite the wrong documents. Fix retrieval quality.
+eng-evals	eng-evals	eng-architecture	Compare the new model against the current one on our golden set.
+eng-evals	eng-evals	eng-qa-testing	How do I know whether the agent is accurate enough to release?
+eng-qa-testing	eng-qa-testing	eng-build-workflow	Write end-to-end tests for sign-up and checkout.
+eng-qa-testing	eng-qa-testing	ops-security-and-reliability	Run a load test before we onboard the enterprise customer.
+eng-security-and-ai-safety	eng-security-and-ai-safety	eng-agent-design	A malicious email could tell my agent to forward the inbox somewhere. Protect against that.
+eng-security-and-ai-safety	eng-security-and-ai-safety	ops-security-and-reliability	Do a threat model of the app before launch.
+finance-bookkeeping-and-close	finance-bookkeeping-and-close	finance-planning-and-runway	Close October and give me the P&L and balance sheet.
+finance-bookkeeping-and-close	finance-bookkeeping-and-close	finance-setup	Here's last month's bank export. Categorize everything and reconcile it.
+finance-fundraising-and-investor-relations	finance-fundraising-and-investor-relations	finance-planning-and-runway	Write this month's update email to my investors.
+finance-fundraising-and-investor-relations	finance-fundraising-and-investor-relations	marketing-brand-and-design	Help me put together the slides for seed investors and a list of funds to approach.
+finance-invoicing-and-collections	finance-invoicing-and-collections	finance-bookkeeping-and-close	Three customers are more than 30 days late. Draft the reminders.
+finance-invoicing-and-collections	finance-invoicing-and-collections	finance-tax-and-statutory-compliance	Bill Acme 12,000 for the annual plan and make sure the tax treatment is right for a customer in France.
+finance-payables-and-payroll	finance-payables-and-payroll	finance-bookkeeping-and-close	Prepare this month's salary run for my two employees.
+finance-payables-and-payroll	finance-payables-and-payroll	finance-planning-and-runway	These five supplier bills arrived this week. Which should I pay first given my cash?
+finance-planning-and-runway	finance-planning-and-runway	founder-weekly-review	How many months of cash do I have left at the current burn?
+finance-planning-and-runway	finance-planning-and-runway	ops-cost-and-finops	What's my gross margin per customer once I account for token costs?
+finance-setup	finance-setup	finance-tax-and-statutory-compliance	Do I have to sign up for VAT before I send my first invoice?
+finance-setup	finance-setup	stack-and-automation-setup	The company was registered yesterday. What bank, accounting package and ledger structure should I put in place?
+finance-tax-and-statutory-compliance	finance-tax-and-statutory-compliance	finance-bookkeeping-and-close	Prepare the quarterly VAT return from the ledger.
+finance-tax-and-statutory-compliance	finance-tax-and-statutory-compliance	finance-planning-and-runway	Can we claim a research and development credit for the engineering work we did this year?
+founder-weekly-review	founder-weekly-review	launch-sprint	It's Monday. Give me the state of the whole company on one page and tell me the three things to do this week.
+founder-weekly-review	founder-weekly-review	sales-pipeline-review-and-forecast	Across cash, deals, product and support, what is slipping right now?
+launch-sprint	launch-sprint	founder-weekly-review	It's day 6 of the launch plan, what am I supposed to be doing today?
+launch-sprint	launch-sprint	start	I have two weeks and an idea. Lay out the whole thing day by day from nothing to paying pilots.
+legal-commercial-contracts	legal-commercial-contracts	legal-privacy-and-ai-compliance	I need terms of service and an order form for my API product.
+legal-commercial-contracts	legal-commercial-contracts	sales-proposal-and-close	A prospect sent over their own master services agreement. Redline it for me.
+legal-compliance-calendar	legal-compliance-calendar	finance-tax-and-statutory-compliance	Tell me every government filing and renewal coming up in the next two months.
+legal-compliance-calendar	legal-compliance-calendar	legal-corporate-governance	Do a legal health check of the company and list what's lapsed.
+legal-corporate-governance	legal-corporate-governance	legal-compliance-calendar	Write up the minutes for yesterday's directors' meeting where we approved the bank mandate.
+legal-corporate-governance	legal-corporate-governance	legal-founder-equity-and-cap-table	Do my shareholders need to vote on increasing the share capital, and how do I document that?
+legal-entity-formation	legal-entity-formation	legal-compliance-calendar	What do I need to file to get the company officially registered, and how long will it take?
+legal-entity-formation	legal-entity-formation	legal-fundraising	I live in Milan but most of my investors are American. Should I incorporate in Italy or in Delaware?
+legal-founder-equity-and-cap-table	legal-founder-equity-and-cap-table	legal-entity-formation	I need to issue my own shares with a four-year vesting schedule and keep a record of who owns what.
+legal-founder-equity-and-cap-table	legal-founder-equity-and-cap-table	legal-hiring-and-contractors	An advisor will get 0.5% of the company. Draft what's needed and show me the updated ownership table.
+legal-fundraising	legal-fundraising	finance-fundraising-and-investor-relations	An angel sent me a term sheet with a 2x liquidation preference. Is that normal?
+legal-fundraising	legal-fundraising	finance-fundraising-and-investor-relations	I want to take 300k from three angels on a convertible instrument. What paperwork do we need to close?
+legal-hiring-and-contractors	legal-hiring-and-contractors	finance-payables-and-payroll	Should my first salesperson in Germany be an employee or go through an employer of record?
+legal-hiring-and-contractors	legal-hiring-and-contractors	legal-ip-and-trademarks	I want to bring on a freelance developer based in Poland. What agreement do I need so the code belongs to the company?
+legal-ip-and-trademarks	legal-ip-and-trademarks	legal-commercial-contracts	One of our libraries is AGPL. Is that a problem for a commercial SaaS?
+legal-ip-and-trademarks	legal-ip-and-trademarks	marketing-brand-and-design	Can somebody else already own the brand name I picked? I'd like to register it in the US and EU.
+legal-privacy-and-ai-compliance	legal-privacy-and-ai-compliance	legal-commercial-contracts	We process EU customers' support emails through a language model. What do we owe them under GDPR?
+legal-privacy-and-ai-compliance	legal-privacy-and-ai-compliance	legal-hiring-and-contractors	Is my hiring-screening agent considered high risk under the EU AI Act?
+marketing-brand-and-design	marketing-brand-and-design	legal-ip-and-trademarks	I need a name for the company and a visual identity with colours and fonts.
+marketing-brand-and-design	marketing-brand-and-design	marketing-communications	Create a pitch deck template and social post formats that all look consistent.
+marketing-communications	marketing-communications	marketing-positioning-and-messaging	Draft the announcement for our launch and a LinkedIn post in my voice.
+marketing-communications	marketing-communications	marketing-positioning-and-messaging	Which journalists cover our space, and what should I pitch them?
+marketing-demand-generation	marketing-demand-generation	sales-crm-and-funnel	I have 2,000 to spend on ads. Where should it go and how do I track cost per opportunity?
+marketing-demand-generation	marketing-demand-generation	sales-prospecting-automation	I need 40 qualified leads next month. Design the campaigns and the nurture emails.
+marketing-field-and-partners	marketing-field-and-partners	marketing-demand-generation	Which conferences are worth attending this spring, and how do I get meetings out of them?
+marketing-field-and-partners	marketing-field-and-partners	sales-icp-and-playbook	I want agencies to resell us. Outline the partner program.
+marketing-positioning-and-messaging	marketing-positioning-and-messaging	sales-icp-and-playbook	I can't explain in one sentence why someone should pick us over hiring another analyst. Fix that.
+marketing-positioning-and-messaging	marketing-positioning-and-messaging	sales-icp-and-playbook	Make me a battlecard against our two closest competitors.
+marketing-seo-geo	marketing-seo-geo	marketing-communications	When people ask ChatGPT for tools like mine, we never get mentioned. How do I change that?
+marketing-seo-geo	marketing-seo-geo	marketing-demand-generation	Find the search terms my buyers use and plan articles around them.
+marketing-website	marketing-website	marketing-demand-generation	Write and build the homepage with a demo request form.
+marketing-website	marketing-website	product-ux-design	Visitors land on the site but almost nobody signs up. Improve it.
+ops-cost-and-finops	ops-cost-and-finops	ops-observability	Our Anthropic bill tripled this month. Find out why and bring it down.
+ops-cost-and-finops	ops-cost-and-finops	ops-observability	Set budget limits per customer on inference spend.
+ops-incident-response	ops-incident-response	ops-observability	The API is returning 500s for every customer right now.
+ops-incident-response	ops-incident-response	ops-observability	Write the postmortem for last night's outage.
+ops-infrastructure-and-deploy	ops-infrastructure-and-deploy	eng-build-workflow	Get the app hosted with separate staging and production and automatic deploys.
+ops-infrastructure-and-deploy	ops-infrastructure-and-deploy	eng-build-workflow	Write the Terraform for the database and queue.
+ops-observability	ops-observability	ops-cost-and-finops	Trace every model call with tokens and latency.
+ops-observability	ops-observability	ops-incident-response	I want a dashboard and phone alerts when error rates spike.
+ops-security-and-reliability	ops-security-and-reliability	legal-privacy-and-ai-compliance	An enterprise prospect is asking whether we are SOC 2 compliant. Get us ready.
+ops-security-and-reliability	ops-security-and-reliability	ops-infrastructure-and-deploy	Set up backups and a disaster recovery plan, and test a restore.
+product-analytics-and-feedback	product-analytics-and-feedback	product-discovery-and-validation	Pull together everything customers said this month across tickets and calls into themes.
+product-analytics-and-feedback	product-analytics-and-feedback	support-customer-success	What events should I track to know if users reach value?
+product-discovery-and-validation	product-discovery-and-validation	product-analytics-and-feedback	I did eight customer interviews. Here are my notes, tell me what they mean.
+product-discovery-and-validation	product-discovery-and-validation	product-strategy-and-roadmap	Before I build anything, how do I check that claims adjusters really have this problem?
+product-pricing-and-packaging	product-pricing-and-packaging	finance-planning-and-runway	Should I charge per seat or per document processed?
+product-pricing-and-packaging	product-pricing-and-packaging	marketing-website	Design three plans with limits and decide whether to have a free tier.
+product-requirements-and-specs	product-requirements-and-specs	eng-agent-design	Write the PRD for the invoice-matching agent, with acceptance criteria.
+product-requirements-and-specs	product-requirements-and-specs	product-strategy-and-roadmap	Turn this roadmap item into user stories a coding agent can build from.
+product-strategy-and-roadmap	product-strategy-and-roadmap	product-requirements-and-specs	Rank these twelve feature ideas and give me a now-next-later plan.
+product-strategy-and-roadmap	product-strategy-and-roadmap	product-requirements-and-specs	What goes into the first version and what do I leave out?
+product-ux-design	product-ux-design	eng-agent-design	Sketch the screens for how a user reviews and approves what the agent wants to do.
+product-ux-design	product-ux-design	support-customer-success	Our onboarding flow confuses people. Redesign it.
+sales-crm-and-funnel	sales-crm-and-funnel	sales-icp-and-playbook	Set up the deal stages and required fields in HubSpot.
+sales-crm-and-funnel	sales-crm-and-funnel	sales-pipeline-review-and-forecast	My CRM is a mess of duplicates and deals without next steps. Clean it up.
+sales-icp-and-playbook	sales-icp-and-playbook	marketing-positioning-and-messaging	Buyers keep saying they don't trust an AI to do this. Give me talk tracks.
+sales-icp-and-playbook	sales-icp-and-playbook	sales-qualification-and-discovery	Define my sales process from first call to signature, including the demo script and how to answer objections.
+sales-pipeline-review-and-forecast	sales-pipeline-review-and-forecast	sales-crm-and-funnel	Which of my open deals are at risk, and what will actually close this quarter?
+sales-pipeline-review-and-forecast	sales-pipeline-review-and-forecast	sales-icp-and-playbook	We lost four deals in a row. Find the pattern.
+sales-proposal-and-close	sales-proposal-and-close	legal-privacy-and-ai-compliance	Procurement sent a 120-question security questionnaire before they'll sign.
+sales-proposal-and-close	sales-proposal-and-close	product-pricing-and-packaging	The buyer wants a written offer with pricing by Friday.
+sales-prospecting-automation	sales-prospecting-automation	marketing-demand-generation	Build a list of 200 logistics companies in the Nordics with the right contacts and write the outbound emails.
+sales-prospecting-automation	sales-prospecting-automation	stack-and-automation-setup	Set up cold outreach so meetings get booked without me writing every email.
+sales-qualification-and-discovery	sales-qualification-and-discovery	sales-crm-and-funnel	Here's the transcript of today's discovery call. Summarize it and write the follow-up.
+sales-qualification-and-discovery	sales-qualification-and-discovery	sales-prospecting-automation	Someone just filled in the demo form. Reply and figure out if they're worth a call.
+stack-and-automation-setup	stack-and-automation-setup	founder-weekly-review	I want the bookkeeping, pipeline cleanup and support triage to run on a schedule without me kicking them off.
+stack-and-automation-setup	stack-and-automation-setup	start	Which software should I subscribe to for each function, and which of it can plug into Claude?
+start	start	launch-sprint	I just decided to start an AI company on my own. Get me set up so you know the basics about me and the business.
+start	start	legal-entity-formation	We moved our headquarters to Lisbon last month, please refresh what you have on file about the company.
+support-ai-agent	support-ai-agent	eng-evals	The support bot gave a wrong refund policy yesterday. Improve it.
+support-ai-agent	support-ai-agent	support-knowledge-base	Half our tickets are the same five questions. Automate the answers with a bot that hands off when unsure.
+support-customer-success	support-customer-success	sales-pipeline-review-and-forecast	Which accounts are likely to churn, and whose renewal is coming up?
+support-customer-success	support-customer-success	sales-proposal-and-close	We just signed Globex. Plan their onboarding to first value.
+support-knowledge-base	support-knowledge-base	eng-build-workflow	Document our REST API with examples.
+support-knowledge-base	support-knowledge-base	support-ai-agent	Write a help article on connecting a Google Drive folder.
+support-setup	support-setup	stack-and-automation-setup	Which helpdesk should I use, and how should tickets be routed and escalated?
+support-setup	support-setup	support-ticket-triage-and-response	I need a support inbox with response-time targets per plan.
+support-ticket-triage-and-response	support-ticket-triage-and-response	ops-incident-response	This customer is furious about a failed export. Write the response and file the bug.
+support-ticket-triage-and-response	support-ticket-triage-and-response	support-ai-agent	There are 23 unread tickets. Sort them and draft replies.

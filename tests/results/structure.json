@@ -1,0 +1,23 @@
+{
+  "skills": 57,
+  "skills_by_area": {
+    "core": 4,
+    "eng": 8,
+    "finance": 7,
+    "legal": 9,
+    "marketing": 7,
+    "ops": 5,
+    "product": 6,
+    "sales": 6,
+    "support": 5
+  },
+  "checks_run": 1111,
+  "checks_failed": 0,
+  "pass_rate": 100.0,
+  "handoff_edges": 212,
+  "orphan_skills": 0,
+  "sprint_plan_coverage_pct": 100.0,
+  "median_body_words": 407,
+  "max_body_words": 663,
+  "failures": []
+}
